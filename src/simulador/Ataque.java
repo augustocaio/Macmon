@@ -9,4 +9,5 @@ public class Ataque {
 		this.dano = dano;
 		this.velocidade = velocidade;
 	}
+	// menor velocidade mais rapido
 }

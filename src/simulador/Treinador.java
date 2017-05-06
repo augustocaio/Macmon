@@ -18,15 +18,19 @@ public class Treinador {
 		return null;
 	}
 	void trocar(Pokemon A, Pokemon B){
+		//if numero de pokemon for 1 e o hp for zero, o treinador perdeu MAS MAIS FACIL FAZER ISSO NA BATALHA
+		//if numero de pokemon for 1 e o treinador tentar trocar nao funciona
 		/*Pokemon Z = new Pokemon();
 		Z = A;
 		A = B;
 		B = Z;
-		Z = null;
-		*/
+		Z = null;*/
 	}
-	void usaritem(Pokemon A){
-		A.hp=100;
+	void usarItem(Pokemon A){
+		A.hp = 100;
+		/*if( A.hp > 100){
+			A.hp = 100;
+		}*/
 		//hp max
 	}
 }
