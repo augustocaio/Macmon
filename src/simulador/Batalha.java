@@ -1,5 +1,5 @@
 package simulador;
 
-public class Batalha extends Controlador{
+public class Batalha extends Controller{
 
 }
