@@ -3,15 +3,34 @@ package simulador;
 public class Batalha extends Controller{
 	private String status = "ativo";
 	
-	public Batalha() {}
+	public Batalha() {
+		
+	}
+	private EventSet es = new EventSet();
+	public void addEvent(Event c) { es.add(c); }
+	public void run() {
+		Event e;
+		while((e = es.getNext()) != null) {
+			if(e.ready()) {
+				e.action();
+					System.out.println(e.description());
+					es.removeCurrent();
+			}
+		}
+	}
 	
 	private class Turno extends Event{
-		public Turno (long eventTime){
+		Treinador t1;
+		Treinador t2;
+		public Turno (long eventTime, Treinador t1, Treinador t2 ){
 			super(eventTime);
+			this.t1 = t1;
+			this.t2 = t2;
+			
 		}
 		
 		public void action(){
-			while(status == "ativo"){
+			if(t1.status && t2.status){
 				
 				// oq falta: opcoes -> fugir - trocar pokemon - item - atacar
 				
@@ -21,9 +40,8 @@ public class Batalha extends Controller{
 				//if pro item: se hp é 0 nao da pra usar o item, usar o boolean de pokemon vivo
 				
 				//if para se o pokemon morrer, trocar o pokemon e quando atacar e ofor  hp 0 ou menor que zero ele fica morto
-				if( status == "inativo"){
-					fimDaBatalha();
-					break;
+				if( t1.status == false){
+					fimDaBatalha( t1.rtNome());
 				}
 			}
 		}
@@ -33,16 +51,15 @@ public class Batalha extends Controller{
 		
 	}
 	
-	public String fimDaBatalha(){
-		return "vencedor";
+	public String fimDaBatalha(String Vencedor){
+		return "O vencedor da batalha foi: "+Vencedor;
 	}
 	public static void main(String[] args){
 		Ataque A1 = new Ataque("Trovom", 35, 4); // pichu, raichu
-		Ataque A2 = new Ataque("Rabada", 40, 5); // pichu, raichu, gyarados, 
-		// mew, mewtwo, arboc, squirtle, charmander
-		
+		Ataque A2 = new Ataque("Rabada", 40, 5); // pichu, raichu, gyarados,  mew, mewtwo, arboc, squirtle, charmander
 		Ataque A3 = new Ataque("Patada", 25, 2); // pichu, raichu
-		Ataque A4 = new Ataque("Chidori", 50, 6); // pichu, raichu
+		Ataque A4 = new Ataque("Chidori", 50, 6); // raichu
+		
 		Ataque A5 = new Ataque("Cuspe", 20, 1); // squirtle, rubbish
 		Ataque A6 = new Ataque("Enxague", 40, 4); // gyarados, squirtle
 		Ataque A7 = new Ataque("Jato", 45, 5); // gyarados, squirtle
@@ -58,33 +75,31 @@ public class Batalha extends Controller{
 		Ataque A17 = new Ataque("Invocacao", 50, 6);//gato
 		Ataque A18 = new Ataque("Xaveco", 30, 3);//gato
 		Ataque A19 = new Ataque("Enaltecer", 40, 4);//gato
-		
-		Ataque A20 = new Ataque("");
+		Ataque A20 = new Ataque("Faisca", 40, 5);// pichu
+		//FAZER O RESTO DOS ATAQUES
+		/*Ataque A20 = new Ataque("");
 		Ataque A21 = new Ataque("");
-		Ataque A22 = new Ataque("");
+		Ataque A22 = new Ataque("");*/
 		
 		
 		
+		Pokemon P1 = new Pokemon("Gyarados", 100, "agua", "raio", A6, A7, A8, A2);
+		Pokemon P2 = new Pokemon("Squirtle", 100, "agua","raio", A5, A7, A6, A2);
+		Pokemon P3 = new Pokemon("Raichu", 100, "raio", "terra", A1, A4, A3, A2);
+		Pokemon P4 = new Pokemon("Pichu", 100, "raio", "terra", A1, A20, A3, A2);
+		Pokemon P5 = new Pokemon("Mew", 100, "psico", "dark", A8, A9, A11, A2);
+		Pokemon P6 = new Pokemon("MewTwo", 100, "psico", "dark", A8, A9, A10, A2);
 		
-		Pokemon P1 = new Pokemon("Gyarados", 100, "agua", , "raio");
-		Pokemon P2 = new Pokemon("Squirtle", 100, "agua");
+		Pokemon P7 = new Pokemon("Rolezera", 100, "dark", "psico", A12, A13, A14, A15);//curtissaum, ficar, ideia errada, sacrificar
+		Pokemon P8 = new Pokemon("Gato do Role", 100, "dark", "psico", A16, A17, A18, A19);//brutos, chega bejando, xaveco, enaltecer
 		
-		Pokemon P3 = new Pokemon("Raichu", 100, "raio", "terra");
-		Pokemon P4 = new Pokemon("Pichu", 100, "raio", "terra");
-		
-		Pokemon P5 = new Pokemon("Mew", 100, "psico", "dark");
-		Pokemon P6 = new Pokemon("MewTwo", 100, "psico", "dark");
-		
-		Pokemon P7 = new Pokemon("Rolezera", 100, "dark", "psico");//curtissaum, ficar, ideia errada, sacrificar
-		Pokemon P8 = new Pokemon("Gato do Role", 100, "dark", "psico");//brutos, chega bejando, xaveco, enaltecer
-		
-		Pokemon P9 = new Pokemon("Dragonite", 100, "dragao", , "veneno");
+		/*Pokemon P9 = new Pokemon("Dragonite", 100, "dragao", , "veneno");
 		Pokemon P10 = new Pokemon("Charmander", 100, "fogo", "agua");
 		Pokemon P11 = new Pokemon("Arboc", 100, "veneno", "dragao");
-		Pokemon P12 = new Pokemon("Rubbish", 100, "terra", "agua");
+		Pokemon P12 = new Pokemon("Rubbish", 100, "terra", "agua");*/
 		
-		Treinador t1 = new Treinador(Trash, );
-		Treinador t2 = new Treinador(Dusty, );
+		Treinador t1 = new Treinador("Trash", P1, P2, P3, P4, P5, P6);
+		Treinador t2 = new Treinador("Dusty", P1, P2, P3, P4, P5, P6 );
 	}
 
 }
