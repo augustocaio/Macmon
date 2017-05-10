@@ -1,27 +1,27 @@
 package simulador;
 
 public class Batalha extends Controller{
-	Ataque A1 = new Ataque("Trovom", 35, 4); // pichu, raichu
-	Ataque A2 = new Ataque("Rabada", 40, 5); // pichu, raichu, gyarados,  mew, mewtwo, arboc, squirtle, charmander
-	Ataque A3 = new Ataque("Patada", 25, 2); // pichu, raichu
-	Ataque A4 = new Ataque("Chidori", 50, 6); // raichu
+	Habilidade A1 = new Habilidade("Trovom", 35, 4); // pichu, raichu
+	Habilidade A2 = new Habilidade("Rabada", 40, 5); // pichu, raichu, gyarados,  mew, mewtwo, arboc, squirtle, charmander
+	Habilidade A3 = new Habilidade("Patada", 25, 2); // pichu, raichu
+	Habilidade A4 = new Habilidade("Chidori", 50, 6); // raichu
 	
-	Ataque A5 = new Ataque("Cuspe", 20, 1); // squirtle, rubbish
-	Ataque A6 = new Ataque("Enxague", 40, 4); // gyarados, squirtle
-	Ataque A7 = new Ataque("Jato", 45, 5); // gyarados, squirtle
-	Ataque A8 = new Ataque("Flash Beam", 60, 7); // gyarados, mewtwo, mew
-	Ataque A9 = new Ataque("Empurrom", 40, 5); //mew, mewtwo
-	Ataque A10 = new Ataque("Surto Psicotico", 70, 9);//mewtwo
-	Ataque A11 = new Ataque("Piripaque", 70, 9);//mew
-	Ataque A12 = new Ataque("Curticao", 20, 1);//rolezera
-	Ataque A13 = new Ataque("Ficar", 35, 4);//rolezera
-	Ataque A14 = new Ataque("Ideia-Errada", 40, 5);//rolezera
-	Ataque A15 = new Ataque("Sacrificio", 70, 9);//rolezera
-	Ataque A16 = new Ataque("Ataques Muito-Brutos", 65, 8);//gato
-	Ataque A17 = new Ataque("Invocacao", 50, 6);//gato
-	Ataque A18 = new Ataque("Xaveco", 30, 3);//gato
-	Ataque A19 = new Ataque("Enaltecer", 40, 4);//gato
-	Ataque A20 = new Ataque("Faisca", 40, 5);// pichu
+	Habilidade A5 = new Habilidade("Cuspe", 20, 1); // squirtle, rubbish
+	Habilidade A6 = new Habilidade("Enxague", 40, 4); // gyarados, squirtle
+	Habilidade A7 = new Habilidade("Jato", 45, 5); // gyarados, squirtle
+	Habilidade A8 = new Habilidade("Flash Beam", 60, 7); // gyarados, mewtwo, mew
+	Habilidade A9 = new Habilidade("Empurrom", 40, 5); //mew, mewtwo
+	Habilidade A10 = new Habilidade("Surto Psicotico", 70, 9);//mewtwo
+	Habilidade A11 = new Habilidade("Piripaque", 70, 9);//mew
+	Habilidade A12 = new Habilidade("Curticao", 20, 1);//rolezera
+	Habilidade A13 = new Habilidade("Ficar", 35, 4);//rolezera
+	Habilidade A14 = new Habilidade("Ideia-Errada", 40, 5);//rolezera
+	Habilidade A15 = new Habilidade("Sacrificio", 70, 9);//rolezera
+	Habilidade A16 = new Habilidade("Ataques Muito-Brutos", 65, 8);//gato
+	Habilidade A17 = new Habilidade("Invocacao", 50, 6);//gato
+	Habilidade A18 = new Habilidade("Xaveco", 30, 3);//gato
+	Habilidade A19 = new Habilidade("Enaltecer", 40, 4);//gato
+	Habilidade A20 = new Habilidade("Faisca", 40, 5);// pichu
 	//FAZER O RESTO DOS ATAQUES
 	/*Ataque A20 = new Ataque("");
 	Ataque A21 = new Ataque("");
@@ -43,13 +43,36 @@ public class Batalha extends Controller{
 	
 	Treinador t1 = new Treinador("Trash", P1, P2, P3, P4, P5, P6);
 	Treinador t2 = new Treinador("Dusty", P1, P2, P3, P4, P5, P6);
-
+	
+	
+	//0 - CLASSE chamar no final da main(?) ou de algum evento
+	private class FinalizaBatalha extends Event{
+		Treinador Vencedor;
+		Treinador Perdedor;
+		public FinalizaBatalha (long eventTime, Treinador W, Treinador L ){
+			super(eventTime);
+			Vencedor = W;
+			Perdedor = L;
+		}
+		public void action(){
+			this.description();
+		};
+		public String description(){
+			return "O vencedor da batalha é: "+Vencedor.pegaNome()+"\nE o perdedor é:"+Perdedor.pegaNome();
+		} 
+	}
+	
+	
+	// 1- CLASSE QUE TROCA O POKEMON
 	private class Troca extends Event{
 		private Treinador t;
 		private Pokemon[] p;	
 		private Pokemon aux;
-		public Troca(long eventTime, Pokemon[] p, int numeroDoPokemon){
+		int i;
+		
+		public Troca(long eventTime, Treinador t, Pokemon[] p){
 			super(eventTime);
+			this.t = t;
 			this.p = p;
 			
 		}
@@ -63,58 +86,59 @@ public class Batalha extends Controller{
 					p[i] = aux;
 					break;
 				}
+				if(i == 5){
+					//FINALIZA A BATALHA
+					//Se o t for o primeiro treinador, quem perde é o treinador 1,
+					//caso contrário o perdedor é o 2
+					//O perdedor fica como ultimo argumento no contrutor do FinalizaBatalha
+					if(t == t1){
+						addEvent(new FinalizaBatalha(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1));
+					}
+					else addEvent(new FinalizaBatalha(System.currentTimeMillis() + 1000, t1/*VENCEDOR*/, t2));
+					
+					break;
+				}
 			}			
 		}
 		public String description(){
-			return "O Pokemon "+aux.pegaNome()+" foi substituido por "+p[0].pegaNome();
+			if(i == 5){
+				//talvez isso deva ser deletado porque ja teria evento FinalizaBatalha
+				return "Todos os Pokemons de "+t.pegaNome()+" estão inativos.";
+			}
+			else
+				return "O Pokemon "+aux.pegaNome()+" foi substituido por "+p[0].pegaNome();
 		}
 	}
 	
-	
-	
-	private class Turno extends Event{
-		Treinador t1;
-		Treinador t2;
-		public Turno (long eventTime, Treinador t1, Treinador t2 ){
+	// 2- CLASSE DE ATAQUE DE UM POKEMON A OUTRO
+	private class Ataque extends Event{
+		Treinador atc, def;
+		Habilidade hab;
+		//No construtor deve por o treinador, a habilidade do pokemon t1.p[0].hab[0]
+		public Ataque (long eventTime, Treinador atacante, Habilidade habilidade, Treinador atacado ){
 			super(eventTime);
-			this.t1 = t1;
-			this.t2 = t2;
+			atc = atacante;
+			def = atacado;
+			hab = habilidade;
 			
 		}		
 		public void action(){
-			if(t1.status && t2.status){
-				
-				// oq falta: opcoes -> fugir - trocar pokemon - item - atacar
-				
-				
-				//se todos os pokemons de um usurario morreram status = inativo
-				
-				//if pro item: se hp é 0 nao da pra usar o item, usar o boolean de pokemon vivo
-				
-				//if para se o pokemon morrer, trocar o pokemon e quando atacar e ofor  hp 0 ou menor que zero ele fica morto
-				if( t1.status == false){
-					fimDaBatalha( t1.rtNome());
+			//SE O TIPO DO ATACANTE FOR A FRAQUEZA DO DEFENSOR
+			if(atc.pokemon[0].pegaTipo().equals(def.pokemon[0].pegaFraqueza())){
+				//CUIDADO QUE O DANO DA HABILIDADE DEVE SER PEGA PELO METODO
+				def.pokemon[0].hp -= 1.5*hab.pegaDano();
+				if(def.pokemon[0].hp<=0){
+					addEvent(new Troca(System.currentTimeMillis() + 1000, def , def.pokemon));
 				}
+				else description();
+				
 			}
 		}
 		public String description(){
-			return "Fim do turno.";
+			return "O Pokemon "+def.pokemon[0].pegaNome()+" perdeu "+hab.pegaDano()+"de HP, agora tem "+def.pokemon[0].hp+"HP";
 		}
 		
 	}
-	
-	
-	
-	
-	
-	public String fimDaBatalha(String Vencedor){
-		return "O vencedor da batalha foi: "+Vencedor;
-	}
-	
-	
-	
-	
-	
 	
 	public static void main(String[] args){
 		
