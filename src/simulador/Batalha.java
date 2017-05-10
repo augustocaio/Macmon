@@ -43,13 +43,36 @@ public class Batalha extends Controller{
 	
 	Treinador t1 = new Treinador("Trash", P1, P2, P3, P4, P5, P6);
 	Treinador t2 = new Treinador("Dusty", P1, P2, P3, P4, P5, P6);
-
+	
+	
+	//0 - CLASSE chamar no final da main(?) ou de algum evento
+	private class FinalizaBatalha extends Event{
+		Treinador Vencedor;
+		Treinador Perdedor;
+		public FinalizaBatalha (long eventTime, Treinador W, Treinador L ){
+			super(eventTime);
+			Vencedor = W;
+			Perdedor = L;
+		}
+		public void action(){
+			this.description();
+		};
+		public String description(){
+			return "O vencedor da batalha é: "+Vencedor.pegaNome()+"\nE o perdedor é:"+Perdedor.pegaNome();
+		} 
+	}
+	
+	
+	// 1- CLASSE QUE TROCA O POKEMON
 	private class Troca extends Event{
 		private Treinador t;
 		private Pokemon[] p;	
 		private Pokemon aux;
-		public Troca(long eventTime, Pokemon[] p, int numeroDoPokemon){
+		int i;
+		
+		public Troca(long eventTime, Treinador t, Pokemon[] p){
 			super(eventTime);
+			this.t = t;
 			this.p = p;
 			
 		}
@@ -63,46 +86,59 @@ public class Batalha extends Controller{
 					p[i] = aux;
 					break;
 				}
+				if(i == 5){
+					//FINALIZA A BATALHA
+					//Se o t for o primeiro treinador, quem perde é o treinador 1,
+					//caso contrário o perdedor é o 2
+					//O perdedor fica como ultimo argumento no contrutor do FinalizaBatalha
+					if(t == t1){
+						addEvent(new FinalizaBatalha(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1));
+					}
+					else addEvent(new FinalizaBatalha(System.currentTimeMillis() + 1000, t1/*VENCEDOR*/, t2));
+					
+					break;
+				}
 			}			
 		}
 		public String description(){
-			return "O Pokemon "+aux.pegaNome()+" foi substituido por "+p[0].pegaNome();
+			if(i == 5){
+				//talvez isso deva ser deletado porque ja teria evento FinalizaBatalha
+				return "Todos os Pokemons de "+t.pegaNome()+" estão inativos.";
+			}
+			else
+				return "O Pokemon "+aux.pegaNome()+" foi substituido por "+p[0].pegaNome();
 		}
 	}
 	
-	
+	// 2- CLASSE DE ATAQUE DE UM POKEMON A OUTRO
 	private class Ataque extends Event{
-		Pokemon atc, def;
-		public Ataque (long eventTime, Pokemon atacante, Pokemon atacado ){
+		Treinador atc, def;
+		Habilidade hab;
+		//No construtor deve por o treinador, a habilidade do pokemon t1.p[0].hab[0]
+		public Ataque (long eventTime, Treinador atacante, Habilidade habilidade, Treinador atacado ){
 			super(eventTime);
 			atc = atacante;
 			def = atacado;
+			hab = habilidade;
 			
 		}		
 		public void action(){
 			//SE O TIPO DO ATACANTE FOR A FRAQUEZA DO DEFENSOR
-			if(atc.pegaTipo().equals(def.pegaFraqueza())){
+			if(atc.pokemon[0].pegaTipo().equals(def.pokemon[0].pegaFraqueza())){
+				//CUIDADO QUE O DANO DA HABILIDADE DEVE SER PEGA PELO METODO
+				def.pokemon[0].hp -= 1.5*hab.pegaDano();
+				if(def.pokemon[0].hp<=0){
+					addEvent(new Troca(System.currentTimeMillis() + 1000, def , def.pokemon));
+				}
+				else description();
 				
 			}
 		}
 		public String description(){
-			return "Fim do turno.";
+			return "O Pokemon "+def.pokemon[0].pegaNome()+" perdeu "+hab.pegaDano()+"de HP, agora tem "+def.pokemon[0].hp+"HP";
 		}
 		
 	}
-	
-	
-	
-	
-	//chamar no final da main(?) ou de algum evento
-	public String fimDaBatalha(String Vencedor){
-		return "O vencedor da batalha foi: "+Vencedor;
-	}
-	
-	
-	
-	
-	
 	
 	public static void main(String[] args){
 		

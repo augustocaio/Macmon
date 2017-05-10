@@ -2,9 +2,9 @@ package simulador;
 
 public class Pokemon {
 	private String nome;
-	public int hp;
+	public long hp;
 	private String tipo;
-	private Habilidade[] ataque = new Habilidade[4];
+	private Habilidade[] hab = new Habilidade[4];
 	private String fraqueza;
 	public boolean status;
 	
@@ -12,14 +12,14 @@ public class Pokemon {
 	//ou usar classe ataque
 	
 	
-	public Pokemon(String nome, int hp, String tipo, String fraqueza, Habilidade a1, Habilidade a2, Habilidade a3, Habilidade a4){
+	public Pokemon(String nome, long hp, String tipo, String fraqueza, Habilidade a1, Habilidade a2, Habilidade a3, Habilidade a4){
 		this.nome = nome;
 		this.hp = hp;
 		this.tipo = tipo;
-		this.ataque[0] = a1;
-		this.ataque[1] = a2;
-		this.ataque[2] = a3;
-		this.ataque[3] = a4;
+		this.hab[0] = a1;
+		this.hab[1] = a2;
+		this.hab[2] = a3;
+		this.hab[3] = a4;
 		this.fraqueza = fraqueza;
 		this.status = true;
 	}
@@ -27,7 +27,7 @@ public class Pokemon {
 	public String pegaNome(){
 		return this.nome;
 	}
-	public int pegaHP(){
+	public long pegaHP(){
 		return this.hp;
 	}
 	public String pegaTipo(){
@@ -37,6 +37,6 @@ public class Pokemon {
 		return this.fraqueza;
 	}
 	public Habilidade pegaAtaque(int i){
-		return this.ataque[i];
+		return this.hab[i];
 	}
 }
