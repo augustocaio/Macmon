@@ -5,3 +5,13 @@
 /Eventos.class
 /Pokemon.class
 /Treinador.class
+/Batalha$Ataque.class
+/Batalha$Curar.class
+/Batalha$FinalizaBatalha.class
+/Batalha$Fuga.class
+/Batalha$Troca.class
+/Controller.class
+/Event.class
+/EventSet.class
+/Habilidade.class
+/Item.class

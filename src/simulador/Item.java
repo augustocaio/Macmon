@@ -12,4 +12,8 @@ public class Item {
 	public String pegaTipo(){
 		return this.tipo;
 	}
+	
+	public String pegaNome() {
+		return this.nome;
+	}
 }
