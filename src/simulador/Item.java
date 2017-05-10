@@ -9,4 +9,7 @@ public class Item {
 		this.qtd = qtd;
 		this.tipo = tipo;
 	}
+	public String pegaTipo(){
+		return this.tipo;
+	}
 }

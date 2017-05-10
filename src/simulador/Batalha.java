@@ -139,6 +139,23 @@ public class Batalha extends Controller{
 		}
 		
 	}
+	private class Curar extends Event{
+		Treinador t;
+		Item item;
+		public Curar (long eventTime, Treinador t, Item I){
+			super(eventTime);
+			this.t = t;
+			this.item = I;
+		}
+		public void action(){
+			if(item.pegaTipo().equals("cura") && t.pokemon[0].hp != 0){
+				t.pokemon[0].hp = 100;
+			}
+		}
+		public String description(){
+			return "O Pokemon "+t.pokemon[0].pegaNome()+" foi curado em 100%.";
+		}
+	}
 	
 	public static void main(String[] args){
 		
