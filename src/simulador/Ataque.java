@@ -11,5 +11,13 @@ public class Ataque {
 		this.tempo = tempo;
 	}
 	// menor velocidade mais rapido
-
+	public String pegaNome(){
+		return this.nome;
+	}
+	public int pegaDano(){
+		return this.dano;
+	}
+	public int pegaTempo(){
+		return this.tempo;
+	}
 }
