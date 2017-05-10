@@ -4,7 +4,7 @@ public class Pokemon {
 	private String nome;
 	public int hp;
 	private String tipo;
-	private Ataque[] ataque = new Ataque[4];
+	private Habilidade[] ataque = new Habilidade[4];
 	private String fraqueza;
 	public boolean status;
 	
@@ -12,7 +12,7 @@ public class Pokemon {
 	//ou usar classe ataque
 	
 	
-	public Pokemon(String nome, int hp, String tipo, String fraqueza, Ataque a1, Ataque a2, Ataque a3, Ataque a4){
+	public Pokemon(String nome, int hp, String tipo, String fraqueza, Habilidade a1, Habilidade a2, Habilidade a3, Habilidade a4){
 		this.nome = nome;
 		this.hp = hp;
 		this.tipo = tipo;
@@ -23,6 +23,7 @@ public class Pokemon {
 		this.fraqueza = fraqueza;
 		this.status = true;
 	}
+	//os seguintes metodos retornam as variaveis de tipo privado
 	public String pegaNome(){
 		return this.nome;
 	}
@@ -35,7 +36,7 @@ public class Pokemon {
 	public String pegaFraqueza(){
 		return this.fraqueza;
 	}
-	public Ataque pegaAtaque(int i){
+	public Habilidade pegaAtaque(int i){
 		return this.ataque[i];
 	}
 }

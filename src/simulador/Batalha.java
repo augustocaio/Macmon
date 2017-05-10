@@ -1,27 +1,27 @@
 package simulador;
 
 public class Batalha extends Controller{
-	Ataque A1 = new Ataque("Trovom", 35, 4); // pichu, raichu
-	Ataque A2 = new Ataque("Rabada", 40, 5); // pichu, raichu, gyarados,  mew, mewtwo, arboc, squirtle, charmander
-	Ataque A3 = new Ataque("Patada", 25, 2); // pichu, raichu
-	Ataque A4 = new Ataque("Chidori", 50, 6); // raichu
+	Habilidade A1 = new Habilidade("Trovom", 35, 4); // pichu, raichu
+	Habilidade A2 = new Habilidade("Rabada", 40, 5); // pichu, raichu, gyarados,  mew, mewtwo, arboc, squirtle, charmander
+	Habilidade A3 = new Habilidade("Patada", 25, 2); // pichu, raichu
+	Habilidade A4 = new Habilidade("Chidori", 50, 6); // raichu
 	
-	Ataque A5 = new Ataque("Cuspe", 20, 1); // squirtle, rubbish
-	Ataque A6 = new Ataque("Enxague", 40, 4); // gyarados, squirtle
-	Ataque A7 = new Ataque("Jato", 45, 5); // gyarados, squirtle
-	Ataque A8 = new Ataque("Flash Beam", 60, 7); // gyarados, mewtwo, mew
-	Ataque A9 = new Ataque("Empurrom", 40, 5); //mew, mewtwo
-	Ataque A10 = new Ataque("Surto Psicotico", 70, 9);//mewtwo
-	Ataque A11 = new Ataque("Piripaque", 70, 9);//mew
-	Ataque A12 = new Ataque("Curticao", 20, 1);//rolezera
-	Ataque A13 = new Ataque("Ficar", 35, 4);//rolezera
-	Ataque A14 = new Ataque("Ideia-Errada", 40, 5);//rolezera
-	Ataque A15 = new Ataque("Sacrificio", 70, 9);//rolezera
-	Ataque A16 = new Ataque("Ataques Muito-Brutos", 65, 8);//gato
-	Ataque A17 = new Ataque("Invocacao", 50, 6);//gato
-	Ataque A18 = new Ataque("Xaveco", 30, 3);//gato
-	Ataque A19 = new Ataque("Enaltecer", 40, 4);//gato
-	Ataque A20 = new Ataque("Faisca", 40, 5);// pichu
+	Habilidade A5 = new Habilidade("Cuspe", 20, 1); // squirtle, rubbish
+	Habilidade A6 = new Habilidade("Enxague", 40, 4); // gyarados, squirtle
+	Habilidade A7 = new Habilidade("Jato", 45, 5); // gyarados, squirtle
+	Habilidade A8 = new Habilidade("Flash Beam", 60, 7); // gyarados, mewtwo, mew
+	Habilidade A9 = new Habilidade("Empurrom", 40, 5); //mew, mewtwo
+	Habilidade A10 = new Habilidade("Surto Psicotico", 70, 9);//mewtwo
+	Habilidade A11 = new Habilidade("Piripaque", 70, 9);//mew
+	Habilidade A12 = new Habilidade("Curticao", 20, 1);//rolezera
+	Habilidade A13 = new Habilidade("Ficar", 35, 4);//rolezera
+	Habilidade A14 = new Habilidade("Ideia-Errada", 40, 5);//rolezera
+	Habilidade A15 = new Habilidade("Sacrificio", 70, 9);//rolezera
+	Habilidade A16 = new Habilidade("Ataques Muito-Brutos", 65, 8);//gato
+	Habilidade A17 = new Habilidade("Invocacao", 50, 6);//gato
+	Habilidade A18 = new Habilidade("Xaveco", 30, 3);//gato
+	Habilidade A19 = new Habilidade("Enaltecer", 40, 4);//gato
+	Habilidade A20 = new Habilidade("Faisca", 40, 5);// pichu
 	//FAZER O RESTO DOS ATAQUES
 	/*Ataque A20 = new Ataque("");
 	Ataque A21 = new Ataque("");
@@ -71,30 +71,18 @@ public class Batalha extends Controller{
 	}
 	
 	
-	
-	private class Turno extends Event{
-		Treinador t1;
-		Treinador t2;
-		public Turno (long eventTime, Treinador t1, Treinador t2 ){
+	private class Ataque extends Event{
+		Pokemon atc, def;
+		public Ataque (long eventTime, Pokemon atacante, Pokemon atacado ){
 			super(eventTime);
-			this.t1 = t1;
-			this.t2 = t2;
+			atc = atacante;
+			def = atacado;
 			
 		}		
 		public void action(){
-			if(t1.status && t2.status){
+			//SE O TIPO DO ATACANTE FOR A FRAQUEZA DO DEFENSOR
+			if(atc.pegaTipo().equals(def.pegaFraqueza())){
 				
-				// oq falta: opcoes -> fugir - trocar pokemon - item - atacar
-				
-				
-				//se todos os pokemons de um usurario morreram status = inativo
-				
-				//if pro item: se hp é 0 nao da pra usar o item, usar o boolean de pokemon vivo
-				
-				//if para se o pokemon morrer, trocar o pokemon e quando atacar e ofor  hp 0 ou menor que zero ele fica morto
-				if( t1.status == false){
-					fimDaBatalha( t1.pegaNome());
-				}
 			}
 		}
 		public String description(){
@@ -106,7 +94,7 @@ public class Batalha extends Controller{
 	
 	
 	
-	
+	//chamar no final da main(?) ou de algum evento
 	public String fimDaBatalha(String Vencedor){
 		return "O vencedor da batalha foi: "+Vencedor;
 	}

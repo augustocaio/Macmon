@@ -1,11 +1,11 @@
 package simulador;
 
-public class Ataque {
+public class Habilidade {
 
 	private String nome;
 	private int dano;
 	private int tempo;
-	public Ataque(String nome, int dano, int tempo){
+	public Habilidade(String nome, int dano, int tempo){
 		this.nome = nome;
 		this.dano = dano;
 		this.tempo = tempo;
