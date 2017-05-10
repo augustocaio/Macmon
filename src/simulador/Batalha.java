@@ -139,6 +139,8 @@ public class Batalha extends Controller{
 		}
 		
 	}
+	
+	// 3 - CLASSE DE CURAR
 	private class Curar extends Event{
 		Treinador t;
 		Item item;
@@ -156,6 +158,19 @@ public class Batalha extends Controller{
 			return "O Pokemon "+t.pokemon[0].pegaNome()+" foi curado em 100%.";
 		}
 	}
+	// 4 - CLASSE DE USAR POKEBOLA (ATENÇÃO: COMPLETAR PARA A ETAPA 2)
+	/*
+	private class Captura extends Event{
+		public Captura (long eventTime, Treinador t, Pokemon Wild){
+			super(eventTime);
+		}
+		public void action(){
+			
+		}
+		public String description(){
+			
+		}
+	}*/
 	
 	public static void main(String[] args){
 		
