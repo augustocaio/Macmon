@@ -4,9 +4,9 @@ public class Pokemon {
 	private String nome;
 	public int hp;
 	private String tipo;
-	private Ataque[] ataques = new Ataque[4];
+	private Ataque[] ataque = new Ataque[4];
 	private String fraqueza;
-	public boolean vivo;
+	public boolean status;
 	
 	//ou vetor com 4 nome de ataques e outro com int dos repectivos danos pra cada pokemon
 	//ou usar classe ataque
@@ -16,11 +16,26 @@ public class Pokemon {
 		this.nome = nome;
 		this.hp = hp;
 		this.tipo = tipo;
-		this.ataques[0] = a1;
-		this.ataques[1] = a2;
-		this.ataques[2] = a3;
-		this.ataques[3] = a4;
+		this.ataque[0] = a1;
+		this.ataque[1] = a2;
+		this.ataque[2] = a3;
+		this.ataque[3] = a4;
 		this.fraqueza = fraqueza;
-		this.vivo = true;
+		this.status = true;
+	}
+	public String pegaNome(){
+		return this.nome;
+	}
+	public int pegaHP(){
+		return this.hp;
+	}
+	public String pegaTipo(){
+		return this.tipo;
+	}
+	public String pegaFraqueza(){
+		return this.fraqueza;
+	}
+	public Ataque pegaAtaque(int i){
+		return this.ataque[i];
 	}
 }
