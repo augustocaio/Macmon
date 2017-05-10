@@ -172,6 +172,33 @@ public class Batalha extends Controller{
 		}
 	}*/
 	
+	// 6 - CLASSE PARA A FUGA
+	public class Fuga extends Event{
+		Treinador t;
+		
+		public Fuga(long eventTime, Treinador fugitivo){
+			super(eventTime);
+			t = fugitivo;
+		}
+		public void action(){
+			description();
+			if(t == t1){
+				addEvent(new FinalizaBatalha(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1));
+			}
+			else{
+				
+				addEvent(new FinalizaBatalha(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, t2));
+			}
+		}
+		public String description(){
+			return "O treinador "+t.pegaNome()+" fugiu da batalha.";
+		}
+	}
+	
+	//TEM QUE CRIAR UM MÉTODO PARA VERIFICAR A PRIORIDADE DO FUGA, TROCA DE POKEMON, USO DO ITEM E ATAQUE
+	//TEM QUE CRIAR UM MÉTODO PARA A MAIN OU CLASSE PARA VERIFICAR A OPÇÃO DO PLAYER E DESENCADEAR OS EVENTOS E CADA CICLO
+	//VER COMO O RUN() FUNCIONA, SE ELE CONTINUA O VETOR ATÉ ACABAR OS 100 EVENTOS, OU TEMOS QUE PARA-LO
+	
 	public static void main(String[] args){
 		
 		
