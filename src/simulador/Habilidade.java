@@ -4,20 +4,20 @@ public class Habilidade {
 
 	private String nome;
 	private int dano;
-	private int tempo;
-	public Habilidade(String nome, int dano, int tempo){
+	private int velocidade;
+	public Habilidade(String nome, int dano, int velocidade){
 		this.nome = nome;
 		this.dano = dano;
-		this.tempo = tempo;
+		this.velocidade = velocidade;
 	}
-	// menor velocidade mais rapido
+	// maior velocidade mais rapido
 	public String pegaNome(){
 		return this.nome;
 	}
 	public int pegaDano(){
 		return this.dano;
 	}
-	public int pegaTempo(){
-		return this.tempo;
+	public int pegaVelocidade(){
+		return this.velocidade;
 	}
 }

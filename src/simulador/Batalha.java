@@ -61,8 +61,6 @@ public class Batalha extends Controller{
 			return "O vencedor da batalha é: "+Vencedor.pegaNome()+"\nE o perdedor é:"+Perdedor.pegaNome();
 		} 
 	}
-	
-	
 	// 1- CLASSE QUE TROCA O POKEMON
 	private class Troca extends Event{
 		private Treinador t;
