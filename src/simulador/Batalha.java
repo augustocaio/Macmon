@@ -85,6 +85,7 @@ public class Batalha extends Controller{
 		
 		public Troca(long eventTime, Treinador t, int which/*de 1 a 4*/){
 			super(eventTime);
+			this.t = t;
 			qual = which;
 			/*this.p = p;*/
 			
@@ -99,13 +100,14 @@ public class Batalha extends Controller{
 			else{
 				//troca pelo proximo vivo
 				while(true){
+					//i começa com 1
 					i++;
 					if(t.pokemon[i].status == true){
 						t.pokemon[0] = t.pokemon[i];
 						t.pokemon[i] = aux;
 						break;
 					}
-					if(i > 4 && aux.status == false){
+					if(i > 5 && aux.status == false){
 						//FINALIZA A BATALHA
 						//Se o t for o primeiro treinador, quem perde é o treinador 1,
 						//caso contrário o perdedor é o 2
@@ -256,24 +258,30 @@ public class Batalha extends Controller{
 		if(mov2 == 4){
 			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, 3));
 		}
-		//Usa item de cura Super Potion
 		if(mov1 == 5){
-			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, SuperPocao));
+			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, 4));
 		}
 		if(mov2 == 5){
+			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, 4));
+		}
+		//Usa item de cura Super Potion
+		if(mov1 == 7){
+			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, SuperPocao));
+		}
+		if(mov2 == 7){
 			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, SuperPocao));
 		}
 		//Usa item de cura Potion
-		if(mov1 == 6){
+		if(mov1 == 8){
 			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, Pocao));
 		}
-		if(mov2 == 6){
+		if(mov2 == 8){
 			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, Pocao));
 		}
 		//Se os personagens estao atacando:
-		if(mov1 >= 7 && mov1 <= 12 && mov2 >= 7 && mov2 <= 12){
+		if(mov1 >= 9 && mov1 <= 14 && mov2 >= 9 && mov2 <= 14){
 			//seta o numero dos ataques no vetor ataque de pokemon
-			int at1 = mov1-7, at2 = mov2-7;
+			int at1 = mov1-9, at2 = mov2-9;
 			Pokemon a;
 			if(t1.pokemon[0].hab[at1].pegaVelocidade() <= t2.pokemon[0].hab[at2].pegaVelocidade()){
 				a = t2.pokemon[0];
@@ -290,12 +298,12 @@ public class Batalha extends Controller{
 				}
 			}
 		}
-		if(mov1 >= 7 && mov1 <=13 && mov2 < 7){
-			int at1 = mov1-7;
+		if(mov1 >= 9 && mov1 <=14 && mov2 < 9){
+			int at1 = mov1-9;
 			addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, t2, t1.pokemon[0].hab[at1]));	
 		}
-		if(mov2 >= 7 && mov2 <=13 && mov1 < 7){
-			int at2 = mov2-7;
+		if(mov2 >= 9 && mov2 <=14 && mov1 < 9){
+			int at2 = mov2-8;
 			addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1, t2.pokemon[0].hab[at2]));	
 		}
 	}
@@ -307,11 +315,11 @@ public class Batalha extends Controller{
 			this.mov2 = mov2dois;
 		}*/
 		int i = 0, j =0;
-		while(i<= mov1.length || i<= mov2.length){
+		while(i< mov1.length || i< mov2.length){
 			ComputaEscolhas(mov1[i],mov2[j]);
-			if(i<=mov1.length)
+			if(i<mov1.length)
 				i++;
-			if(j<=mov2.length)
+			if(j<mov2.length)
 				j++;
 		}
 
@@ -349,8 +357,8 @@ public class Batalha extends Controller{
 	
 	public static void main(String[] args){
 		Batalha bt = new Batalha();
-		int[] escolhas1 = {1, 1, 1, 1};
-		int[] escolhas2 = {1, 1, 1, 1};
+		int[] escolhas1 = {3, 3, 3, 3};
+		int[] escolhas2 = {3, 3, 3, 3};
 		bt.setEscolhas(escolhas1, escolhas2);
 		bt.run();
 		/*while(nenhum jogador perdeu){
