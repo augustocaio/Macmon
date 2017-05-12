@@ -32,15 +32,15 @@ public class Batalha extends Controller{
 	Habilidade A18 = new Habilidade("Xaveco", 30, 3);//gato
 	Habilidade A19 = new Habilidade("Enaltecer", 40, 4);//gato
 	
+	Habilidade A25 = new Habilidade("Lança-Chamas", 50, 6);
+	Habilidade A26 = new Habilidade("Bola de fogo", 45, 5);
+	Habilidade A27 = new Habilidade("Toxico", 50, 6);
+	Habilidade A28 = new Habilidade("Toxic Spray", 35, 4);
+	Habilidade A29 = new Habilidade("Jogar Terra", 25, 2);
+	
 	Potion SuperPocao = new Potion("Super Potion", 1, 100);
 	Potion Pocao = new Potion("Potion", 1, 50);
 	
-
-
-	//FAZER O RESTO DOS ATAQUES
-	/*Ataque A20 = new Ataque("");
-	Ataque A21 = new Ataque("");
-	Ataque A22 = new Ataque("");*/
 	
 	Pokemon P1 = new Pokemon("Gyarados", 100, "agua", "raio", A6, A7, A8, A2);
 	Pokemon P2 = new Pokemon("Squirtle", 100, "agua","raio", A5, A7, A6, A2);
@@ -52,14 +52,12 @@ public class Batalha extends Controller{
 	Pokemon P8 = new Pokemon("Gato do Role", 100, "dark", "psico", A16, A17, A18, A19);//brutos, chega bejando, xaveco, enaltecer
 	Pokemon P9 = new Pokemon("Arbok", 100, "veneno", "dragao", A2, A5, A21, A22);
 	Pokemon P10 = new Pokemon("Dragonite", 100, "dragao", "veneno", A8, A23, A2, A24);
-	//FAZER O RESTO DOS POKEMONS
-	/*
-	Pokemon P10 = new Pokemon("Charmander", 100, "fogo", "agua");
-	
-	Pokemon P12 = new Pokemon("Rubbish", 100, "terra", "agua");*/
+	Pokemon P11 = new Pokemon("Charmander", 100, "fogo", "agua", A2, A3, A25, A26);	
+	Pokemon P12 = new Pokemon("Rubbish", 100, "terra", "agua", A5, A27, A28, A29);
 	
 	Treinador t1 = new Treinador("Trash", P1, P2, P3, P4, P5, P6);
-	Treinador t2 = new Treinador("Dusty", P7, P8, P9, P10, P1, P2);// mudar pra p11 p12
+	Treinador t2 = new Treinador("Dusty", P7, P8, P9, P10, P11, P12);
+	
 	
 	//0 - CLASSE chamar no final da main(?) ou de algum evento
 	private class FinalizaBatalha extends Event{
@@ -318,6 +316,32 @@ public class Batalha extends Controller{
 		}
 
 	}
+	
+	
+	/*
+	 * 				**METODO DO JUN**
+	 * public Boolean checarPrioridade(int prioridade1, int prioridade2, int velocidade1, int velocidade2) {
+		if(prioridade1 == prioridade2 && prioridade1 == 1) {
+			if(velocidade1 >= velocidade2) {
+				return true;
+				// retorna true se as prioridades são para o ataque e a velocidade do primeiro é maior ou igual a do segundo -> o primeiro realiza ataque
+			} else {
+				return false;
+				// o segundo realiza ataque pois sua velocidade é maior
+			}
+		}
+		
+		// prioridadeX -> numero entre 1 a 4 q determina a prioridade da ação : fuga -> 4; usar item -> 3; trocar pokemon -> 2 ; ataque -> 1;
+		if(prioridade1 > prioridade2) {	
+			return true;
+			// retorna true se a prioridade da ação do primeiro for maior que a prioridade da ação do segundo jogador
+			// ação do primeiro jogador ocorre antes q do segundo
+		} else {
+			return false;
+			// ação do segundo jogar ocorre antes do primeiro
+		}
+		
+	}*/
 	
 	//TEM QUE CRIAR UM MÉTODO PARA VERIFICAR A PRIORIDADE DO FUGA, TROCA DE POKEMON, USO DO ITEM E ATAQUE
 	//TEM QUE CRIAR UM MÉTODO PARA A MAIN OU CLASSE PARA VERIFICAR A OPÇÃO DO PLAYER E DESENCADEAR OS EVENTOS E CADA CICLO
