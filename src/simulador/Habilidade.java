@@ -1,7 +1,6 @@
 package simulador;
 
 public class Habilidade {
-
 	private String nome;
 	private int dano;
 	private int velocidade;

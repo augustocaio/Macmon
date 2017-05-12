@@ -32,6 +32,9 @@ public class Batalha extends Controller{
 	Habilidade A18 = new Habilidade("Xaveco", 30, 3);//gato
 	Habilidade A19 = new Habilidade("Enaltecer", 40, 4);//gato
 	
+	Potion SuperPocao = new Potion("Super Potion", 1, 100);
+	Potion Pocao = new Potion("Potion", 1, 50);
+	
 
 
 	//FAZER O RESTO DOS ATAQUES
@@ -56,8 +59,7 @@ public class Batalha extends Controller{
 	Pokemon P12 = new Pokemon("Rubbish", 100, "terra", "agua");*/
 	
 	Treinador t1 = new Treinador("Trash", P1, P2, P3, P4, P5, P6);
-	Treinador t2 = new Treinador("Dusty", P7, P8, P9, P10, P11, P12);
-	
+	Treinador t2 = new Treinador("Dusty", P7, P8, P9, P10, P1, P2);// mudar pra p11 p12
 	
 	//0 - CLASSE chamar no final da main(?) ou de algum evento
 	private class FinalizaBatalha extends Event{
@@ -78,39 +80,51 @@ public class Batalha extends Controller{
 	// 1- CLASSE QUE TROCA O POKEMON
 	private class Troca extends Event{
 		private Treinador t;
-		private Pokemon[] p;	
+		private int qual;
+		/*private Pokemon[] p;*/	
 		private Pokemon aux;
 		int i;
 		
-		public Troca(long eventTime, Treinador t, Pokemon[] p){
+		public Troca(long eventTime, Treinador t, int which/*de 1 a 4*/){
 			super(eventTime);
-			this.t = t;
-			this.p = p;
+			qual = which;
+			/*this.p = p;*/
 			
 		}
 		public void action(){
-			aux = p[0];
+			aux = t.pokemon[0];
 			int i = 0;
-			while(true){
-				i++;
-				if(p[i].status == true){
-					p[0] = p[i];
-					p[i] = aux;
-					break;
-				}
-				if(i == 5){
-					//FINALIZA A BATALHA
-					//Se o t for o primeiro treinador, quem perde é o treinador 1,
-					//caso contrário o perdedor é o 2
-					//O perdedor fica como ultimo argumento no contrutor do FinalizaBatalha
-					if(t == t1){
-						addEvent(new FinalizaBatalha(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1));
+			if(t.pokemon[qual].status == true){
+				t.pokemon[0] = t.pokemon[qual];
+				t.pokemon[qual] = aux;
+			}
+			else{
+				//troca pelo proximo vivo
+				while(true){
+					i++;
+					if(t.pokemon[i].status == true){
+						t.pokemon[0] = t.pokemon[i];
+						t.pokemon[i] = aux;
+						break;
 					}
-					else addEvent(new FinalizaBatalha(System.currentTimeMillis() + 1000, t1/*VENCEDOR*/, t2));
-					
-					break;
+					if(i > 4 && aux.status == false){
+						//FINALIZA A BATALHA
+						//Se o t for o primeiro treinador, quem perde é o treinador 1,
+						//caso contrário o perdedor é o 2
+						//O perdedor fica como ultimo argumento no contrutor do FinalizaBatalha
+						if(t == t1){
+							addEvent(new FinalizaBatalha(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1));
+						}
+						else addEvent(new FinalizaBatalha(System.currentTimeMillis() + 1000, t1/*VENCEDOR*/, t2));
+						
+						break;
+					}
+					else{
+						t.pokemon[0] = aux;
+						break;
+					}
 				}
-			}			
+			}		
 		}
 		public String description(){
 			if(i == 5){
@@ -118,7 +132,7 @@ public class Batalha extends Controller{
 				return "Todos os Pokemons de "+t.pegaNome()+" estão inativos.";
 			}
 			else
-				return "O Pokemon "+aux.pegaNome()+" foi substituido por "+p[0].pegaNome();
+				return "O Pokemon "+aux.pegaNome()+" foi substituido por "+t.pokemon[0].pegaNome();
 		}
 	}
 	
@@ -127,7 +141,7 @@ public class Batalha extends Controller{
 		Treinador atc, def;
 		Habilidade hab;
 		//No construtor deve por o treinador, a habilidade do pokemon t1.p[0].hab[0]
-		public Ataque (long eventTime, Treinador atacante, Habilidade habilidade, Treinador atacado ){
+		public Ataque (long eventTime, Treinador atacante, Treinador atacado, Habilidade habilidade ){
 			super(eventTime);
 			atc = atacante;
 			def = atacado;
@@ -140,7 +154,7 @@ public class Batalha extends Controller{
 				//CUIDADO QUE O DANO DA HABILIDADE DEVE SER PEGA PELO METODO
 				def.pokemon[0].hp -= 1.5*hab.pegaDano();
 				if(def.pokemon[0].hp<=0){
-					addEvent(new Troca(System.currentTimeMillis() + 1000, def , def.pokemon));
+					addEvent(new Troca(System.currentTimeMillis() + 1000, def , 1));
 				}
 				else description();
 				
@@ -155,19 +169,28 @@ public class Batalha extends Controller{
 	// 3 - CLASSE DE CURAR
 	private class Curar extends Event{
 		Treinador t;
-		Item item;
-		public Curar (long eventTime, Treinador t, Item I){
+		Potion pocao;
+		public Curar (long eventTime, Treinador t, Potion I){
 			super(eventTime);
 			this.t = t;
-			this.item = I;
+			this.pocao = I;
 		}
 		public void action(){
-			if(item.pegaTipo().equals("cura") && t.pokemon[0].hp != 0){
-				t.pokemon[0].hp = 100;
+			if(t.pokemon[0].hp != 0){
+				t.pokemon[0].hp += pocao.pegaEfeito();
+				if(t.pokemon[0].hp>100){
+					t.pokemon[0].hp = 100;
+				}
 			}
+			/*if(pocao.pegaNome().equals("Potion") && t.pokemon[0].hp != 0){
+				t.pokemon[0].hp += 50;
+				if(t.pokemon[0].hp>100){
+					t.pokemon[0].hp = 100;
+				}
+			}*/
 		}
 		public String description(){
-			return "O Pokemon "+t.pokemon[0].pegaNome()+" foi curado em 100%.";
+			return "O Pokemon "+t.pokemon[0].pegaNome()+" foi curado e tem "+t.pokemon[0].hp+" de HP.";
 		}
 	}
 	// 4 - CLASSE DE USAR POKEBOLA (ATENÇÃO: COMPLETAR PARA A ETAPA 2)
@@ -184,7 +207,7 @@ public class Batalha extends Controller{
 		}
 	}*/
 	
-	// 6 - CLASSE PARA A FUGA
+	// 5 - CLASSE PARA A FUGA
 	public class Fuga extends Event{
 		Treinador t;
 		
@@ -206,12 +229,109 @@ public class Batalha extends Controller{
 			return "O treinador "+t.pegaNome()+" fugiu da batalha.";
 		}
 	}
+	// 6 - METODO PRA DETERMINAR OS EVENTOS as escolhas vão de 1 a 7
+	public void ComputaEscolhas(int mov1, int mov2){
+		if(mov1 == 1){
+			addEvent(new Fuga(System.currentTimeMillis() + /*adiciona 1s*/1000, t1));
+		}
+		if(mov2 == 1 && mov1 != 1){
+			addEvent(new Fuga(System.currentTimeMillis() + /*adiciona 1s*/1000, t2));
+		}
+		//troca o primeiro pelo segundo pokemon do vetor
+		if(mov1 == 2){
+			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, 1));
+		}
+		if(mov2 == 2){
+			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, 1));
+		}
+		//troca o primeiro pelo terceiro pokemon do vetor
+		if(mov1 == 3){
+			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, 2));
+		}
+		if(mov2 == 3){
+			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, 2));
+		}
+		//troca o primeiro pelo quarto pokemon do vetor
+		if(mov1 == 4){
+			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, 3));
+		}
+		if(mov2 == 4){
+			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, 3));
+		}
+		//Usa item de cura Super Potion
+		if(mov1 == 5){
+			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, SuperPocao));
+		}
+		if(mov2 == 5){
+			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, SuperPocao));
+		}
+		//Usa item de cura Potion
+		if(mov1 == 6){
+			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, Pocao));
+		}
+		if(mov2 == 6){
+			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, Pocao));
+		}
+		//Se os personagens estao atacando:
+		if(mov1 >= 7 && mov1 <= 12 && mov2 >= 7 && mov2 <= 12){
+			//seta o numero dos ataques no vetor ataque de pokemon
+			int at1 = mov1-7, at2 = mov2-7;
+			Pokemon a;
+			if(t1.pokemon[0].hab[at1].pegaVelocidade() <= t2.pokemon[0].hab[at2].pegaVelocidade()){
+				a = t2.pokemon[0];
+				addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, t2, t1.pokemon[0].hab[at1]));
+				if(a == t2.pokemon[0]){
+					addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1, t2.pokemon[0].hab[at2]));
+				}
+			}
+			else{
+				a = t1.pokemon[0];
+				addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1, t2.pokemon[0].hab[at2]));
+				if(a == t1.pokemon[0]){
+					addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, t2, t1.pokemon[0].hab[at1]));
+				}
+			}
+		}
+		if(mov1 >= 7 && mov1 <=13 && mov2 < 7){
+			int at1 = mov1-7;
+			addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, t2, t1.pokemon[0].hab[at1]));	
+		}
+		if(mov2 >= 7 && mov2 <=13 && mov1 < 7){
+			int at2 = mov2-7;
+			addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1, t2.pokemon[0].hab[at2]));	
+		}
+	}
+	
+	private void setEscolhas(int[] mov1, int[] mov2){
+		/*public setEscolhas(long eventTime, int[] mov1um, int[] mov2dois){
+			super(eventTime);
+			this.mov1 = mov1um;
+			this.mov2 = mov2dois;
+		}*/
+		int i = 0, j =0;
+		while(i<= mov1.length || i<= mov2.length){
+			ComputaEscolhas(mov1[i],mov2[j]);
+			if(i<=mov1.length)
+				i++;
+			if(j<=mov2.length)
+				j++;
+		}
+
+	}
 	
 	//TEM QUE CRIAR UM MÉTODO PARA VERIFICAR A PRIORIDADE DO FUGA, TROCA DE POKEMON, USO DO ITEM E ATAQUE
 	//TEM QUE CRIAR UM MÉTODO PARA A MAIN OU CLASSE PARA VERIFICAR A OPÇÃO DO PLAYER E DESENCADEAR OS EVENTOS E CADA CICLO
 	//VER COMO O RUN() FUNCIONA, SE ELE CONTINUA O VETOR ATÉ ACABAR OS 100 EVENTOS, OU TEMOS QUE PARA-LO
 	
 	public static void main(String[] args){
+		Batalha bt = new Batalha();
+		int[] escolhas1 = {1, 1, 1, 1};
+		int[] escolhas2 = {1, 1, 1, 1};
+		bt.setEscolhas(escolhas1, escolhas2);
+		bt.run();
+		/*while(nenhum jogador perdeu){
+			lê as escolhas, mas não é pra fazer isso pois não há interface
+		}*/
 		
 		
 		

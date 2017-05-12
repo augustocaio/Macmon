@@ -4,7 +4,7 @@ public class Pokemon {
 	private String nome;
 	public long hp;
 	private String tipo;
-	private Habilidade[] hab = new Habilidade[4];
+	public Habilidade[] hab = new Habilidade[4];
 	private String fraqueza;
 	public boolean status;
 	
