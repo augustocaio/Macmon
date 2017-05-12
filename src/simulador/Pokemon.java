@@ -2,7 +2,7 @@ package simulador;
 
 public class Pokemon {
 	private String nome;
-	public long hp;
+	public double hp;
 	private String tipo;
 	public Habilidade[] hab = new Habilidade[4];
 	private String fraqueza;
@@ -12,7 +12,7 @@ public class Pokemon {
 	//ou usar classe ataque
 	
 	
-	public Pokemon(String nome, long hp, String tipo, String fraqueza, Habilidade a1, Habilidade a2, Habilidade a3, Habilidade a4){
+	public Pokemon(String nome, double hp, String tipo, String fraqueza, Habilidade a1, Habilidade a2, Habilidade a3, Habilidade a4){
 		this.nome = nome;
 		this.hp = hp;
 		this.tipo = tipo;
@@ -24,10 +24,20 @@ public class Pokemon {
 		this.status = true;
 	}
 	//os seguintes metodos retornam as variaveis de tipo privado
+	public void setVida(double dano){
+		System.out.println("dano é:" +dano);
+		this.hp = this.hp - dano;
+		System.out.println("HP é depois do dano:" +hp);
+		if(this.hp <= 0.0){
+			System.out.println("Entrei no caso de morte e HP é:" +hp);
+			hp = 0;
+			status = false;
+		}
+	}
 	public String pegaNome(){
 		return this.nome;
 	}
-	public long pegaHP(){
+	public double pegaHP(){
 		return this.hp;
 	}
 	public String pegaTipo(){
