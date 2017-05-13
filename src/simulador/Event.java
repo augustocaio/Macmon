@@ -5,7 +5,7 @@ abstract public class Event {
 	evtTime = eventTime;
 	}
 	public boolean ready() {
-		return System.currentTimeMillis() >= evtTime;
+		return System.currentTimeMillis() >= evtTime; //quando for a hora do evento retorna true
 	}
 	abstract public void action();
 	abstract public String description();

@@ -51,8 +51,8 @@ public class Batalha extends Controller{
 	Pokemon P11 = new Pokemon("Charmander", 100, "fogo", "agua", A2, A3, A25, A26);	
 	Pokemon P12 = new Pokemon("Rubbish", 100, "terra", "agua", A5, A27, A28, A29);
 	
-	Treinador t1 = new Treinador("Trash", P1, P2, P12, P4, P5, P6);
-	Treinador t2 = new Treinador("Dusty", P3, P8, P9, P10, P11, P7);
+	Treinador t1 = new Treinador("Trash", P1, P2, P3, P4, P5, P6);
+	Treinador t2 = new Treinador("Dusty", P7, P8, P9, P10, P11, P12);
 	
 	
 	//0 - CLASSE chamar no final da main(?) ou de algum evento
@@ -71,355 +71,185 @@ public class Batalha extends Controller{
 			return "O vencedor da batalha é: "+Vencedor.pegaNome()+"\nE o perdedor é: "+Perdedor.pegaNome();
 		} 
 	}
-	// 1- CLASSE QUE TROCA O POKEMON
-	private class Troca extends Event{
-		private Treinador t;
-		private int qual;
-		/*private Pokemon[] p;*/	
-		private Pokemon aux;
-		int i;
-		
-		public Troca(long eventTime, Treinador t, int which/*de 1 a 4*/){
-			super(eventTime);
-			this.t = t;
-			qual = which;
-			/*this.p = p;*/
-			
+
+	
+	// 2- ATAQUE DE UM POKEMON A OUTRO
+	public void Ataque ( Treinador atacante, Treinador atacado, Habilidade habilidade ) {
+		int index = Arrays.asList(atacante.pokemon[0].hab).indexOf(habilidade);
+		if(atacante == t1){
+			t2.pokemon[0].setVida(habilidade.pegaDano());
+			if(t2.pokemon[0].status == false){
+				t2.troca(1);
+				return;
+			}
 		}
-		public void action(){
-			aux = t.pokemon[0];
-			int i = 0;
-			if(t == t1){
-				if(t1.pokemon[qual].status == true){
-					t1.pokemon[0] = t.pokemon[qual];
-					t1.pokemon[qual] = aux;
-				}
+		if( atacante == t2){
+			t1.pokemon[0].setVida(habilidade.pegaDano());
+			if(t1.pokemon[0].status == false){
+				System.out.println("TROCA:");
+				t1.troca(1);
+				return;
 			}
-			if(t == t2){
-				if(t2.pokemon[qual].status == true){
-					t2.pokemon[0] = t.pokemon[qual];
-					t2.pokemon[qual] = aux;
-				}
-			
-			}
-			if(aux.status == false){
-				//troca pelo proximo vivo
-				while(true){
-					//i começa com 1
-					i++;
-					if(t == t1){
-						if(t1.pokemon[i].status == true){
-							t1.pokemon[0] = t1.pokemon[i];
-							t1.pokemon[i] = aux;
-							description();
-							break;
-						}
-					}
-					if(t == t2){
-						if(t2.pokemon[i].status == true){
-							t2.pokemon[0] = t2.pokemon[i];
-							t2.pokemon[i] = aux;
-							description();
-							break;
-						}
-					}	
-					if(i > 5 && aux.status == false){
-						//FINALIZA A BATALHA
-						//Se o t for o primeiro treinador, quem perde é o treinador 1,
-						//caso contrário o perdedor é o 2
-						//O perdedor fica como ultimo argumento no contrutor do FinalizaBatalha
-						if(t == t1){
-							addEvent(new FinalizaBatalha(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1));
-						}
-						else addEvent(new FinalizaBatalha(System.currentTimeMillis() + 1000, t1/*VENCEDOR*/, t2));
-						
-						break;
-					}
-					else{
-						if(t == t1){
-							t1.pokemon[0] = aux;
-							break;
-						}
-						else {
-							t2.pokemon[0] = aux;
-							break;
-						}
-					}
-				}
-			}
-		}		
-		
-		public String description(){
-			if(i == 5){
-				//talvez isso deva ser deletado porque ja teria evento FinalizaBatalha
-				return "Todos os Pokemons de "+t.pegaNome()+" estão inativos.";
-			}
-			else 
-				return "O Pokemon "+aux.pegaNome()+", do Treinador " +t.pegaNome()+", foi substituido pelo Pokemon "+t.pokemon[0].pegaNome();
 		}
+		System.out.println("O Pokemon "+atacante.pokemon[0].pegaNome()+" atacou "+atacado.pokemon[0].pegaNome()+" com "+atacante.pokemon[0].hab[index].pegaNome()+
+				"\n"+atacado.pokemon[0].pegaNome()+" perdeu "+habilidade.pegaDano()+"HP, agora tem "+atacado.pokemon[0].hp+"HP\n---------------------------------------");
 	}
 	
-	// 2- CLASSE DE ATAQUE DE UM POKEMON A OUTRO
-	private class Ataque extends Event{
-		Treinador atc, def;
-		Habilidade hab;
-		double seTemFraqueza = 0;
-		double dano;
-		int index = 0;
-		//No construtor deve por o treinador, a habilidade do pokemon t1.p[0].hab[0]
-		public Ataque (long eventTime, Treinador atacante, Treinador atacado, Habilidade habilidade ){
-			super(eventTime);
-			atc = atacante;
-			def = atacado;
-			hab = habilidade;
-			dano = hab.pegaDano();
-			
-		}		
-		public void action(){
-			//SE O TIPO DO ATACANTE FOR A FRAQUEZA DO DEFENSOR			
-			if(atc.pokemon[0].pegaTipo().equals(def.pokemon[0].pegaFraqueza())){
-				index = Arrays.asList(atc.pokemon[0].hab).indexOf(this.hab);
-				
-				if(def.pegaNome() == t1.pegaNome()){
-					System.out.println("*************\nVida de "+t1.pokemon[0].pegaNome()+": "+t1.pokemon[0].hp);
-				}
-				if(def.pegaNome() == t2.pegaNome()){
-					System.out.println("*************\nVida de "+t2.pokemon[0].pegaNome()+": "+t2.pokemon[0].hp);
-				}
-				//CUIDADO QUE O DANO DA HABILIDADE DEVE SER PEGA PELO METODO
-				dano = 1.5*hab.pegaDano();
-				System.out.println("*************\nATAQUE:\nDANO: "+dano);			
-				
-				if(def.pegaNome() == t1.pegaNome()){
-					t1.pokemon[0].setVida(dano);
-					System.out.println("*************\nVida de "+t1.pokemon[0].pegaNome()+": "+t1.pokemon[0].hp);
-					if(t1.pokemon[0].pegaHP() <= 0){
-						MataPokemon(t1);
-					}
-				}
-				if(def.pegaNome() == t2.pegaNome()){
-					t2.pokemon[0].setVida(dano);
-					System.out.println("*************\nVida de "+t2.pokemon[0].pegaNome()+": "+t2.pokemon[0].hp);
-					if(t2.pokemon[0].pegaHP() <= 0){
-						MataPokemon(t2);
-					}
-				}
-				description();
-				
-			} 
-			else {
-				if(def.pegaNome() == t1.pegaNome()){
-					System.out.println("*************\nVida de "+t1.pokemon[0].pegaNome()+": "+t1.pokemon[0].hp);
-				}
-				if(def.pegaNome() == t2.pegaNome()){
-					System.out.println("*************\nVida de "+t2.pokemon[0].pegaNome()+": "+t2.pokemon[0].hp);
-				}
-				index = Arrays.asList(atc.pokemon[0].hab).indexOf(this.hab);
-				System.out.println("*************\nATAQUE:\nDANO: "+dano);	
-				def.pokemon[0].hp -= 1.5*hab.pegaDano();				
-				
-				if(def.pegaNome() == t1.pegaNome()){
-					t1.pokemon[0].setVida(dano);
-					System.out.println("*************\nVida de "+t1.pokemon[0].pegaNome()+":  "+t1.pokemon[0].hp);
-					if(t1.pokemon[0].pegaHP() <= 0){
-						MataPokemon(t1);
-					}
-				}
-				if(def.pegaNome() == t2.pegaNome()){
-					t2.pokemon[0].setVida(dano);
-					System.out.println("*************\nVida de "+t2.pokemon[0].pegaNome()+":  "+t2.pokemon[0].hp);
-					if(t2.pokemon[0].pegaHP() <= 0){
-						MataPokemon(t2);
-					}
-				}
-					description();
-			}
-		}
-		public String description(){
-			if(atc.pokemon[0].pegaTipo().equals(def.pokemon[0].pegaFraqueza())){
-				if(def.pegaNome() == t1.pegaNome())
-				return "O Pokemon "+t2.pokemon[0].pegaNome()+ " atacou com "+t2.pokemon[0].pegaAtaque(index).pegaNome()+
-						" o Pokemon "+t1.pokemon[0].pegaNome()  + ", que perdeu "+dano
-						+" de HP, agora tendo "+t1.pokemon[0].hp+" HP";
-				else
-					return "O Pokemon "+t1.pokemon[0].pegaNome()+ " atacou com "+t1.pokemon[0].pegaAtaque(index).pegaNome()+
-							" o Pokemon "+t2.pokemon[0].pegaNome()  + ", que perdeu "+dano
-							+" de HP, agora tendo "+t2.pokemon[0].hp+" HP";
-			} else {
-				if(def.pegaNome() == t1.pegaNome())
-					return "O Pokemon "+t2.pokemon[0].pegaNome()+ " atacou com "+t2.pokemon[0].pegaAtaque(index).pegaNome()+
-							" o Pokemon "+t1.pokemon[0].pegaNome()  + ", que perdeu "+dano
-							+" de HP, agora tendo "+t1.pokemon[0].hp+" HP";
-					else
-						return "O Pokemon "+t1.pokemon[0].pegaNome()+ " atacou com "+t1.pokemon[0].pegaAtaque(index).pegaNome()+
-								" o Pokemon "+t2.pokemon[0].pegaNome()  + ", que perdeu "+dano
-								+" de HP, agora tendo "+t2.pokemon[0].hp+" HP";
-			}
-		}
-	}
-	
-	// 3 - CLASSE DE CURAR
-	private class Curar extends Event{
-		Treinador t;
-		Potion pocao;
-		public Curar (long eventTime, Treinador t, Potion I){
-			super(eventTime);
-			this.t = t;
-			this.pocao = I;
-		}
-		public void action(){
-			if(t.pokemon[0].hp != 0){
-				t.pokemon[0].hp += pocao.pegaEfeito();
-				if(t.pokemon[0].hp>100){
-					t.pokemon[0].hp = 100;
-				}
-				pocao.qtd--;
-			}
-			/*if(pocao.pegaNome().equals("Potion") && t.pokemon[0].hp != 0){
-				t.pokemon[0].hp += 50;
-				if(t.pokemon[0].hp>100){
-					t.pokemon[0].hp = 100;
-				}
-			}*/
-		}
-		public String description(){
-			return "O Pokemon "+t.pokemon[0].pegaNome()+" foi curado com " + 
-					pocao.pegaNome() + " e tem " +t.pokemon[0].hp+" de HP.";
-		}
-	}
-	// 4 - CLASSE DE USAR POKEBOLA (ATENÇÃO: COMPLETAR PARA A ETAPA 2)
-	/*
-	private class Captura extends Event{
-		public Captura (long eventTime, Treinador t, Pokemon Wild){
-			super(eventTime);
-		}
-		public void action(){
-			
-		}
-		public String description(){
-			
-		}
-	}*/
-	
-	// 5 - CLASSE PARA A FUGA
-	public class Fuga extends Event{
-		Treinador t;
-		
-		public Fuga(long eventTime, Treinador fugitivo){
-			super(eventTime);
-			t = fugitivo;
-		}
-		public void action(){
-			description();
-			if(t == t1){
-				addEvent(new FinalizaBatalha(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1));
-			}
-			else{
-				
-				addEvent(new FinalizaBatalha(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, t2));
-			}
-		}
-		public String description(){
-			return "O treinador "+t.pegaNome()+" fugiu da batalha.";
-		}
-	}
+
 	// 6 - METODO PRA DETERMINAR OS EVENTOS as escolhas vão de 1 a 7
 	public void ComputaEscolhas(int mov1, int mov2){
 		if(mov1 == 1){
-			addEvent(new Fuga(System.currentTimeMillis() + /*adiciona 1s*/1000, t1));
+			t1.corre();
 		}
 		if(mov2 == 1 && mov1 != 1){
-			addEvent(new Fuga(System.currentTimeMillis() + /*adiciona 1s*/1000, t2));
+			t2.corre();
 		}
 		//troca o primeiro pelo segundo pokemon do vetor
 		if(mov1 == 2 && mov2 != 1){
-			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, 1));
+			t1.troca(1);
 		}
 		if(mov2 == 2){
-			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, 1));
+			t2.troca(1);
 		}
 		//troca o primeiro pelo terceiro pokemon do vetor
 		if(mov1 == 3 && mov2 != 1){
-			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, 2));
+			t1.troca(2);
 		}
 		if(mov2 == 3){
-			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, 2));
+			t2.troca(2);
 		}
 		//troca o primeiro pelo quarto pokemon do vetor
 		if(mov1 == 4 && mov2 != 1){
-			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, 3));
+			t1.troca(3);
 		}
 		if(mov2 == 4){
-			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, 3));
+			t2.troca(3);
 		}// troca o primeiro pelo quinto pokemon
 		if(mov1 == 5 && mov2 != 1){
-			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, 4));
+			t1.troca(4);
 		}
 		if(mov2 == 5){
-			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, 4));
+			t2.troca(4);
 		}// troca o primeiro pelo sexto
 		if(mov1 == 6 && mov2 != 1){
-			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, 5));
+			t1.troca(5);
 		}
 		if(mov2 == 6){
-			addEvent(new Troca(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, 5));
+			t2.troca(5);
 		}
 		//Usa item de cura Super Potion
 		if(mov1 == 7 && mov2 != 1){
-			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, SuperPocao));
+			t1.curar(SuperPocao);
 		}
 		if(mov2 == 7){
-			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, SuperPocao));
+			t2.curar(SuperPocao);
 		}
 		//Usa item de cura Potion
 		if(mov1 == 8 && mov2 != 1){
-			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, Pocao));
+			t1.curar(Pocao);
 		}
 		if(mov2 == 8){
-			addEvent(new Curar(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, Pocao));
+			t2.curar(Pocao);
 		}
 		//Se os personagens estao atacando:
-		if(mov1 >= 9 && mov1 <= 14 && mov2 >= 9 && mov2 <= 14){
-			//seta o numero dos ataques no vetor ataque de pokemon
-			int at1 = mov1-9, at2 = mov2-9;
-			Pokemon a;
-			if(t1.pokemon[0].hab[at1].pegaVelocidade() <= t2.pokemon[0].hab[at2].pegaVelocidade()){
-				a = t2.pokemon[0];
-				addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, t2, t1.pokemon[0].hab[at1]));
-				if(a == t2.pokemon[0]){
-					addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1, t2.pokemon[0].hab[at2]));
+		if(mov1 >= 9 && mov1 <= 12 && mov2 >= 9 && mov2 <= 12){
+			if(t1.pokemon[0].status == true && t2.pokemon[0].status == true){
+				//seta o numero dos ataques no vetor ataque de pokemon
+				int at1 = mov1-9, at2 = mov2-9;
+				
+				if(t1.pokemon[0].hab[at1].pegaVelocidade() <= t2.pokemon[0].hab[at2].pegaVelocidade()){
+					if(t1.pokemon[0].pegaTipo().equals(t2.pokemon[0].pegaFraqueza())){
+						t1.pokemon[0].hab[at1].dano = t1.pokemon[0].hab[at1].dano*1.5;
+					}
+					Ataque ( t1, t2, t1.pokemon[0].hab[at1] );
+					
+					//caso o pokemon morra, ele nao pode mais atacar
+					if(t1.pokemon[0].hp - t2.pokemon[0].hab[at2].pegaDano() >= 0){
+						System.out.println("2");
+						Ataque ( t2, t1, t2.pokemon[0].hab[at2] );
+					}
+					
+					if(t1.pokemon[0].pegaTipo().equals(t2.pokemon[0].pegaFraqueza())){
+						t1.pokemon[0].hab[at1].dano = t1.pokemon[0].hab[at1].dano/1.5;
+					}
+				}
+				else{
+					if(t2.pokemon[0].pegaTipo().equals(t1.pokemon[0].pegaFraqueza())){
+						t2.pokemon[0].hab[at2].dano = t2.pokemon[0].hab[at2].dano*1.5;
+					}
+					System.out.println("3");
+					Ataque ( t2, t1, t2.pokemon[0].hab[at2]);
+					
+					//caso o pokemon morra, ele nao pode mais atacar
+					if(t2.pokemon[0].hp - t1.pokemon[0].hab[at1].pegaDano() >= 0){
+						System.out.println("3");
+						Ataque ( t1, t2, t1.pokemon[0].hab[at1]);
+					}
+					
+					if(t2.pokemon[0].pegaTipo().equals(t1.pokemon[0].pegaFraqueza())){
+						t2.pokemon[0].hab[at2].dano = t2.pokemon[0].hab[at2].dano/1.5;
+					}
 				}
 			}
-			else{
-				a = t1.pokemon[0];
-				addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1, t2.pokemon[0].hab[at2]));
-				if(a == t1.pokemon[0]){
-					addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, t2, t1.pokemon[0].hab[at1]));
-				}
-			}
+			
 		}
-		if(mov1 >= 9 && mov1 <=14 && mov2 < 9){
+		if(mov1 >= 9 && mov1 <=12 && mov2 < 9){
 			int at1 = mov1-9;
-			addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, t2, t1.pokemon[0].hab[at1]));	
+			if(t1.pokemon[0].status == true && t2.pokemon[0].status == true){
+				System.out.println("4");
+				Ataque ( t1, t2, t1.pokemon[0].hab[at1]);
+			}	
 		}
-		if(mov2 >= 9 && mov2 <=14 && mov1 < 9){
+		if(mov2 >= 9 && mov2 <=12 && mov1 < 9){
 			int at2 = mov2-8;
-			addEvent(new Ataque(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1, t2.pokemon[0].hab[at2]));	
+			if(t1.pokemon[0].status == true && t2.pokemon[0].status == true){
+				System.out.println("5");
+				Ataque ( t2, t1, t2.pokemon[0].hab[at2]);	
+			}
+				System.out.println("5");
+				Ataque ( t2, t1, t2.pokemon[0].hab[at2]);	
 		}
 	}
-	public void MataPokemon (Treinador x){
+	/*public void MataPokemon (Treinador x){
+		int m;
 		if(x.pegaNome() == t1.pegaNome()){
 			t1.pokemon[0].status = false;
-			addEvent(new Troca(System.currentTimeMillis() + 1000, t1 , 1));
+
+				System.out.println("ANTES");
+				
+			for(m = 0; m<=5; m++){
+				System.out.println("Pokemon do indice: "+m+" é "+t1.pokemon[m].pegaNome()+" e seu status é "+t1.pokemon[m].status );
+			}
+			
+			t1.troca(1);
+			
+			System.out.println("DEPOIS");
+			
+			for(m = 0; m<=5; m++){
+				System.out.println("Pokemon do indice: "+m+" é "+t1.pokemon[m].pegaNome()+" e seu status é "+t1.pokemon[m].status );
+			}
 		}
 		if(x.pegaNome() == t2.pegaNome()){
 			t2.pokemon[0].status = false;
-			addEvent(new Troca(System.currentTimeMillis() + 1000, t2 , 1));
+
+			System.out.println("ANTES");
+			
+			for(m = 0; m<=5; m++){
+				System.out.println("Pokemon do indice: "+m+" é "+t2.pokemon[m].pegaNome()+" e seu status é "+t2.pokemon[m].status );
+			}
+		
+			t2.troca(1);
+		
+			System.out.println("DEPOIS");
+		
+			for(m = 0; m<=5; m++){
+				System.out.println("Pokemon do indice: "+m+" é "+t2.pokemon[m].pegaNome()+" e seu status é "+t2.pokemon[m].status );
+			}
 		}
 		
 		
-	}
-	private void setEscolhas(int[] mov1, int[] mov2){
+	}*/
+	/*private void setEscolhas(int[] mov1, int[] mov2){
 		int i = 0, j =0;
 		while(i< mov1.length || i< mov2.length){
 			ComputaEscolhas(mov1[i],mov2[j]);
@@ -428,17 +258,19 @@ public class Batalha extends Controller{
 			if(j<mov2.length)
 				j++;
 		}
-
 	}
+	*/
 	//VER COMO O RUN() FUNCIONA, SE ELE CONTINUA O VETOR ATÉ ACABAR OS 100 EVENTOS, OU TEMOS QUE PARA-LO
 	
 	public static void main(String[] args){
 		Batalha bt = new Batalha();
-		int[] escolhas1 = {12, 10, 12};
-		int[] escolhas2 = {10, 9, 7};
 		// 1 - fuga, 2~6- troca pelo 1~5, 7 - super potion, 8 - potion 
 		// 9 -> ataque 0, 10 -> ataque 1, 11 -> ataque 2, 12 -> ataque 3
-		bt.setEscolhas(escolhas1, escolhas2);
+		bt.ComputaEscolhas(9, 9);
+		bt.ComputaEscolhas(10, 10);
+		bt.ComputaEscolhas(11,  11);
+		bt.ComputaEscolhas(12, 12);
+		
 		bt.run();
 		
 	}

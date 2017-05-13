@@ -19,5 +19,35 @@ public class Treinador {
 	String pegaNome(){
 		return this.nome;
 	}
+	public void curar(Potion a){
+		if(this.pokemon[0].hp>0){
+			this.pokemon[0].hp+= a.pegaEfeito();
+		}
+		if(this.pokemon[0].hp>=100){
+			this.pokemon[0].hp = 100;
+		}
+	}
+	public void corre(){
+		status = false;
+		System.out.println("O treinador "+pegaNome()+" perdeu a batalha.");
+	}
+	public void troca(int i){
+		Pokemon aux = this.pokemon[0];
+		int k = i ;
+		while(k<5){
+			this.pokemon[0] = pokemon[k];
+			if(pokemon[0].status ==  true){
+				pokemon[k] = pokemon[0];
+				break;
+			}
+			k++;
+		}
+		if(k!=0)
+			System.out.println(aux.pegaNome()+" foi substituido por "+pokemon[0].pegaNome());
+		if(k>=5){
+			status = false;
+			System.out.println("O treinador "+pegaNome()+" perdeu a batalha.");
+		}
+	}
 	
 }

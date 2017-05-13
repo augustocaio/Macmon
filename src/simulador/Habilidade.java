@@ -2,9 +2,9 @@ package simulador;
 
 public class Habilidade {
 	private String nome;
-	private double dano;
+	public double dano;
 	private int velocidade;
-	public Habilidade(String nome, double dano, int velocidade){
+	public Habilidade(String nome, int dano, int velocidade){
 		this.nome = nome;
 		this.dano = dano;
 		this.velocidade = velocidade;
