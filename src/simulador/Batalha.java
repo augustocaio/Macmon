@@ -300,7 +300,14 @@ public class Batalha extends Controller{
 		// 4-2
 		bt.ComputaEscolhas(12, 9); // rip gato -> arbok, pichu com 30
 		// 4-3
-		bt.ComputaEscolhas(12, 9);
+		bt.ComputaEscolhas(9, 8); 
+		
+		bt.ComputaEscolhas(10, 11); // pichu rip -> mewtwo, arbok com 65
+		// 5-3
+		bt.ComputaEscolhas(12, 9);// arbok rip -> dragonite, mewtwo com 40
+		// 5-4
+		bt.ComputaEscolhas(11, 12); // mewtwo rip -> 6-4, fim da batalha
+
 		bt.run();
 		
 	}

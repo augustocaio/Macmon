@@ -48,11 +48,11 @@ public class Treinador {
 			}
 			k++;
 		}
-		if(k!=0)
+		if(k!=0 && k<=5)
 			System.out.println(aux.pegaNome()+" foi substituido por "+pokemon[0].pegaNome());
-		if(k>=6){
+		if(k>=5){
 			status = false;
-			System.out.println("O treinador "+pegaNome()+" perdeu a batalha.");
+			System.out.println("O treinador "+pegaNome()+" perdeu a batalha por não possuir mais pokemons para combate");
 		}
 	}
 	
