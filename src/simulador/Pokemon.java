@@ -27,11 +27,7 @@ public class Pokemon {
 	public void setVida(double dano){
 		this.hp -= dano;
 		if(this.hp <= 0.0){
-<<<<<<< HEAD
 			System.out.println(this.pegaNome()+" agora esta invalido.");
-=======
-			//System.out.println(this.pegaNome()+" agora esta invalido.");
->>>>>>> jun
 			this.hp = 0;
 			status = false;
 		}

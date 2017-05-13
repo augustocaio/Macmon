@@ -16,14 +16,10 @@ public class Habilidade {
 	public double pegaDano(){
 		return this.dano;
 	}
-<<<<<<< HEAD
-=======
 	
 	public void setDano(double d){
 		this.dano = d;
 	}
->>>>>>> jun
-
 	public int pegaVelocidade(){
 		return this.velocidade;
 	}
