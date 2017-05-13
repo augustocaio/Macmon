@@ -1,38 +1,41 @@
 package simulador;
 
-public class Batalha extends Controller{
+import java.util.Arrays;
 
-	// arrumar essa desgraça para algo decente
+public class Batalha extends Controller{
 	// mudar valores de velocidade dos ataques para algo "decente"
 	Habilidade A1 = new Habilidade("Trovom", 35, 4); // pichu, raichu
-	Habilidade A3 = new Habilidade("Patada", 25, 2); // pichu, raichu
-	Habilidade A20 = new Habilidade("Faisca", 40, 5);// pichu
 	Habilidade A2 = new Habilidade("Rabada", 40, 5); // pichu, raichu, gyarados,  mew, mewtwo, arbok, squirtle, charmander
+	Habilidade A3 = new Habilidade("Patada", 25, 2); // pichu, raichu
 	Habilidade A4 = new Habilidade("Chidori", 50, 6); // raichu
-	Habilidade A21 = new Habilidade("Mordida", 35, 4);// arbok
-	Habilidade A22 = new Habilidade("Poison Sting", 35, 4);// arbok
 	Habilidade A5 = new Habilidade("Cuspe", 20, 1); // arbok, squirtle, rubbish
 	Habilidade A6 = new Habilidade("Enxague", 40, 4); // gyarados, squirtle
-	Habilidade A7 = new Habilidade("Jato", 45, 5); // gyarados, squirtle	
-	Habilidade A23 = new Habilidade("Furacao", 80, 10); //dragonite
-	Habilidade A24 = new Habilidade("Dragon Tail", 50, 6);// dragonite
-	Habilidade A8 = new Habilidade("Hyper Beam", 60, 7); // gyarados, mewtwo, mew, dragonite	
+	Habilidade A7 = new Habilidade("Jato", 45, 5); // gyarados, squirtle
+	Habilidade A8 = new Habilidade("Hyper Beam", 60, 7); // gyarados, mewtwo, mew, dragonite
 	Habilidade A9 = new Habilidade("Empurrom", 40, 5); //mew, mewtwo
 	Habilidade A10 = new Habilidade("Surto Psicotico", 70, 9);//mewtwo
 	Habilidade A11 = new Habilidade("Piripaque", 70, 9);//mew
 	Habilidade A12 = new Habilidade("Curticao", 20, 1);//rolezera
 	Habilidade A13 = new Habilidade("Ficar", 35, 4);//rolezera
 	Habilidade A14 = new Habilidade("Ideia-Errada", 40, 5);//rolezera
-	Habilidade A15 = new Habilidade("Sacrificio", 70, 9);//rolezera	
+	Habilidade A15 = new Habilidade("Sacrificio", 70, 9);//rolezera
 	Habilidade A16 = new Habilidade("Ataques Muito-Brutos", 65, 8);//gato
 	Habilidade A17 = new Habilidade("Invocacao", 50, 6);//gato
 	Habilidade A18 = new Habilidade("Xaveco", 30, 3);//gato
 	Habilidade A19 = new Habilidade("Enaltecer", 40, 4);//gato
-	Habilidade A25 = new Habilidade("Lança-Chamas", 50, 6);
+	Habilidade A20 = new Habilidade("Faisca", 40, 5);// pichu
+	Habilidade A21 = new Habilidade("Mordida", 35, 4);// arbok
+	Habilidade A22 = new Habilidade("Poison Sting", 35, 4);// arbok
+	Habilidade A23 = new Habilidade("Furacao", 80, 10); //dragonite
+	Habilidade A24 = new Habilidade("Dragon Tail", 50, 6);// dragonite
+	Habilidade A25 = new Habilidade("LanÃ§a-Chamas", 50, 6);
 	Habilidade A26 = new Habilidade("Bola de fogo", 45, 5);
 	Habilidade A27 = new Habilidade("Toxico", 50, 6);
 	Habilidade A28 = new Habilidade("Toxic Spray", 35, 4);
 	Habilidade A29 = new Habilidade("Jogar Terra", 25, 2);
+	
+	Potion SuperPocao = new Potion("Super Potion", 5, 100);
+	Potion Pocao = new Potion("Potion", 10, 50);
 	
 	
 	Pokemon P1 = new Pokemon("Gyarados", 100, "agua", "raio", A6, A7, A8, A2);
@@ -43,7 +46,7 @@ public class Batalha extends Controller{
 	Pokemon P6 = new Pokemon("MewTwo", 100, "psico", "dark", A8, A9, A10, A2);
 	Pokemon P7 = new Pokemon("Rolezera", 100, "dark", "psico", A12, A13, A14, A15);//curtissaum, ficar, ideia errada, sacrificar
 	Pokemon P8 = new Pokemon("Gato do Role", 100, "dark", "psico", A16, A17, A18, A19);//brutos, chega bejando, xaveco, enaltecer
-	Pokemon P9 = new Pokemon("Arbok", 100, "veneno", "dragao", A27, A5, A21, A22);
+	Pokemon P9 = new Pokemon("Arbok", 100, "veneno", "dragao", A2, A5, A21, A22);
 	Pokemon P10 = new Pokemon("Dragonite", 100, "dragao", "veneno", A8, A23, A2, A24);
 	Pokemon P11 = new Pokemon("Charmander", 100, "fogo", "agua", A2, A3, A25, A26);	
 	Pokemon P12 = new Pokemon("Rubbish", 100, "terra", "agua", A5, A27, A28, A29);
@@ -65,174 +68,210 @@ public class Batalha extends Controller{
 			this.description();
 		};
 		public String description(){
-			return "O vencedor da batalha Ã©: "+Vencedor.pegaNome()+"\nE o perdedor Ã©:"+Perdedor.pegaNome();
+			return "O vencedor da batalha Ã©: "+Vencedor.pegaNome()+"\nE o perdedor Ã©: "+Perdedor.pegaNome();
 		} 
 	}
-	// 1- CLASSE QUE TROCA O POKEMON
-	private class Troca extends Event{
-		private Treinador t;
-		private Pokemon[] p;	
-		private Pokemon aux;
-		int i;
-		
-		public Troca(long eventTime, Treinador t, Pokemon[] p){
-			super(eventTime);
-			this.t = t;
-			this.p = p;
-			
+
+	
+	// 2- ATAQUE DE UM POKEMON A OUTRO
+	public void Ataque ( Treinador atacante, Treinador atacado, Habilidade habilidade ) {
+		int index = Arrays.asList(atacante.pokemon[0].hab).indexOf(habilidade);
+		if(atacante == t1){
+			t2.pokemon[0].setVida(habilidade.pegaDano());
+			if(t2.pokemon[0].status == false){
+				t2.troca(1);
+				return;
+			}
 		}
-		public void action(){
-			aux = p[0];
-			int i = 0;
-			while(true){
-				i++;
-				if(p[i].status == true){
-					p[0] = p[i];
-					p[i] = aux;
-					break;
-				}
-				if(i == 5){
-					//FINALIZA A BATALHA
-					//Se o t for o primeiro treinador, quem perde Ã© o treinador 1,
-					//caso contrÃ¡rio o perdedor Ã© o 2
-					//O perdedor fica como ultimo argumento no contrutor do FinalizaBatalha
-					if(t == t1){
-						addEvent(new FinalizaBatalha(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1));
+		if( atacante == t2){
+			t1.pokemon[0].setVida(habilidade.pegaDano());
+			if(t1.pokemon[0].status == false){
+				System.out.println("TROCA:");
+				t1.troca(1);
+				return;
+			}
+		}
+		System.out.println("O Pokemon "+atacante.pokemon[0].pegaNome()+" atacou "+atacado.pokemon[0].pegaNome()+" com "+atacante.pokemon[0].hab[index].pegaNome()+
+				"\n"+atacado.pokemon[0].pegaNome()+" perdeu "+habilidade.pegaDano()+"HP, agora tem "+atacado.pokemon[0].hp+"HP\n---------------------------------------");
+	}
+	
+
+	// 6 - METODO PRA DETERMINAR OS EVENTOS as escolhas vÃ£o de 1 a 7
+	public void ComputaEscolhas(int mov1, int mov2){
+		if(mov1 == 1){
+			t1.corre();
+		}
+		if(mov2 == 1 && mov1 != 1){
+			t2.corre();
+		}
+		//troca o primeiro pelo segundo pokemon do vetor
+		if(mov1 == 2 && mov2 != 1){
+			t1.troca(1);
+		}
+		if(mov2 == 2){
+			t2.troca(1);
+		}
+		//troca o primeiro pelo terceiro pokemon do vetor
+		if(mov1 == 3 && mov2 != 1){
+			t1.troca(2);
+		}
+		if(mov2 == 3){
+			t2.troca(2);
+		}
+		//troca o primeiro pelo quarto pokemon do vetor
+		if(mov1 == 4 && mov2 != 1){
+			t1.troca(3);
+		}
+		if(mov2 == 4){
+			t2.troca(3);
+		}// troca o primeiro pelo quinto pokemon
+		if(mov1 == 5 && mov2 != 1){
+			t1.troca(4);
+		}
+		if(mov2 == 5){
+			t2.troca(4);
+		}// troca o primeiro pelo sexto
+		if(mov1 == 6 && mov2 != 1){
+			t1.troca(5);
+		}
+		if(mov2 == 6){
+			t2.troca(5);
+		}
+		//Usa item de cura Super Potion
+		if(mov1 == 7 && mov2 != 1){
+			t1.curar(SuperPocao);
+		}
+		if(mov2 == 7){
+			t2.curar(SuperPocao);
+		}
+		//Usa item de cura Potion
+		if(mov1 == 8 && mov2 != 1){
+			t1.curar(Pocao);
+		}
+		if(mov2 == 8){
+			t2.curar(Pocao);
+		}
+		//Se os personagens estao atacando:
+		if(mov1 >= 9 && mov1 <= 12 && mov2 >= 9 && mov2 <= 12){
+			if(t1.pokemon[0].status == true && t2.pokemon[0].status == true){
+				//seta o numero dos ataques no vetor ataque de pokemon
+				int at1 = mov1-9, at2 = mov2-9;
+				
+				if(t1.pokemon[0].hab[at1].pegaVelocidade() <= t2.pokemon[0].hab[at2].pegaVelocidade()){
+					if(t1.pokemon[0].pegaTipo().equals(t2.pokemon[0].pegaFraqueza())){
+						t1.pokemon[0].hab[at1].dano = t1.pokemon[0].hab[at1].dano*1.5;
 					}
-					else addEvent(new FinalizaBatalha(System.currentTimeMillis() + 1000, t1/*VENCEDOR*/, t2));
+					Ataque ( t1, t2, t1.pokemon[0].hab[at1] );
 					
-					break;
+					//caso o pokemon morra, ele nao pode mais atacar
+					if(t1.pokemon[0].hp - t2.pokemon[0].hab[at2].pegaDano() >= 0){
+						System.out.println("2");
+						Ataque ( t2, t1, t2.pokemon[0].hab[at2] );
+					}
+					
+					if(t1.pokemon[0].pegaTipo().equals(t2.pokemon[0].pegaFraqueza())){
+						t1.pokemon[0].hab[at1].dano = t1.pokemon[0].hab[at1].dano/1.5;
+					}
 				}
-			}			
-		}
-		public String description(){
-			if(i == 5){
-				//talvez isso deva ser deletado porque ja teria evento FinalizaBatalha
-				return "Todos os Pokemons de "+t.pegaNome()+" estÃ£o inativos.";
+				else{
+					if(t2.pokemon[0].pegaTipo().equals(t1.pokemon[0].pegaFraqueza())){
+						t2.pokemon[0].hab[at2].dano = t2.pokemon[0].hab[at2].dano*1.5;
+					}
+					System.out.println("3");
+					Ataque ( t2, t1, t2.pokemon[0].hab[at2]);
+					
+					//caso o pokemon morra, ele nao pode mais atacar
+					if(t2.pokemon[0].hp - t1.pokemon[0].hab[at1].pegaDano() >= 0){
+						System.out.println("3");
+						Ataque ( t1, t2, t1.pokemon[0].hab[at1]);
+					}
+					
+					if(t2.pokemon[0].pegaTipo().equals(t1.pokemon[0].pegaFraqueza())){
+						t2.pokemon[0].hab[at2].dano = t2.pokemon[0].hab[at2].dano/1.5;
+					}
+				}
 			}
-			else
-				return "O Pokemon "+aux.pegaNome()+" foi substituido por "+p[0].pegaNome();
+			
+		}
+		if(mov1 >= 9 && mov1 <=12 && mov2 < 9){
+			int at1 = mov1-9;
+			if(t1.pokemon[0].status == true && t2.pokemon[0].status == true){
+				System.out.println("4");
+				Ataque ( t1, t2, t1.pokemon[0].hab[at1]);
+			}	
+		}
+		if(mov2 >= 9 && mov2 <=12 && mov1 < 9){
+			int at2 = mov2-8;
+			if(t1.pokemon[0].status == true && t2.pokemon[0].status == true){
+				System.out.println("5");
+				Ataque ( t2, t1, t2.pokemon[0].hab[at2]);	
+			}
+				System.out.println("5");
+				Ataque ( t2, t1, t2.pokemon[0].hab[at2]);	
 		}
 	}
-	
-	// 2- CLASSE DE ATAQUE DE UM POKEMON A OUTRO
-	private class Ataque extends Event{
-		Treinador atc, def;
-		Habilidade hab;
-		//No construtor deve por o treinador, a habilidade do pokemon t1.p[0].hab[0]
-		public Ataque (long eventTime, Treinador atacante, Habilidade habilidade, Treinador atacado ){
-			super(eventTime);
-			atc = atacante;
-			def = atacado;
-			hab = habilidade;
-			
-		}		
-		public void action(){
-			//SE O TIPO DO ATACANTE FOR A FRAQUEZA DO DEFENSOR
-			if(atc.pokemon[0].pegaTipo().equals(def.pokemon[0].pegaFraqueza())){
-				//CUIDADO QUE O DANO DA HABILIDADE DEVE SER PEGA PELO METODO
-				def.pokemon[0].hp -= 1.5*hab.pegaDano();
-				if(def.pokemon[0].hp<=0){
-					addEvent(new Troca(System.currentTimeMillis() + 1000, def , def.pokemon));
-					def.pokemon[0].status = false;
-				}
-				else description();
+	/*public void MataPokemon (Treinador x){
+		int m;
+		if(x.pegaNome() == t1.pegaNome()){
+			t1.pokemon[0].status = false;
+
+				System.out.println("ANTES");
 				
+			for(m = 0; m<=5; m++){
+				System.out.println("Pokemon do indice: "+m+" Ã© "+t1.pokemon[m].pegaNome()+" e seu status Ã© "+t1.pokemon[m].status );
+			}
+			
+			t1.troca(1);
+			
+			System.out.println("DEPOIS");
+			
+			for(m = 0; m<=5; m++){
+				System.out.println("Pokemon do indice: "+m+" Ã© "+t1.pokemon[m].pegaNome()+" e seu status Ã© "+t1.pokemon[m].status );
 			}
 		}
-		public String description(){
-			return "O Pokemon "+def.pokemon[0].pegaNome()+" perdeu "+hab.pegaDano()+"de HP, agora tem "+def.pokemon[0].hp+"HP";
+		if(x.pegaNome() == t2.pegaNome()){
+			t2.pokemon[0].status = false;
+
+			System.out.println("ANTES");
+			
+			for(m = 0; m<=5; m++){
+				System.out.println("Pokemon do indice: "+m+" Ã© "+t2.pokemon[m].pegaNome()+" e seu status Ã© "+t2.pokemon[m].status );
+			}
+		
+			t2.troca(1);
+		
+			System.out.println("DEPOIS");
+		
+			for(m = 0; m<=5; m++){
+				System.out.println("Pokemon do indice: "+m+" Ã© "+t2.pokemon[m].pegaNome()+" e seu status Ã© "+t2.pokemon[m].status );
+			}
 		}
 		
-	}
-	
-	// 3 - CLASSE DE CURAR
-	private class Curar extends Event{
-		Treinador t;
-		Item item;
-		public Curar (long eventTime, Treinador t, Item I){
-			super(eventTime);
-			this.t = t;
-			this.item = I;
-		}
-		public void action(){
-			if(item.pegaTipo().equals("cura") && t.pokemon[0].hp != 0){
-				t.pokemon[0].hp = 100;
-			}
-		}
-		public String description(){
-			return "O Pokemon "+t.pokemon[0].pegaNome()+" foi curado em 100%.";
-		}
-	}
-	// 4 - CLASSE DE USAR POKEBOLA (ATENÃ‡ÃƒO: COMPLETAR PARA A ETAPA 2)
-	/*
-	private class Captura extends Event{
-		public Captura (long eventTime, Treinador t, Pokemon Wild){
-			super(eventTime);
-		}
-		public void action(){
-			
-		}
-		public String description(){
-			
-		}
+		
 	}*/
-	
-	// 6 - CLASSE PARA A FUGA
-	public class Fuga extends Event{
-		Treinador t;
-		
-		public Fuga(long eventTime, Treinador fugitivo){
-			super(eventTime);
-			t = fugitivo;
-		}
-		public void action(){
-			description();
-			if(t == t1){
-				addEvent(new FinalizaBatalha(System.currentTimeMillis() + /*adiciona 1s*/1000, t2, t1));
-			}
-			else{
-				
-				addEvent(new FinalizaBatalha(System.currentTimeMillis() + /*adiciona 1s*/1000, t1, t2));
-			}
-		}
-		public String description(){
-			return "O treinador "+t.pegaNome()+" fugiu da batalha.";
+	/*private void setEscolhas(int[] mov1, int[] mov2){
+		int i = 0, j =0;
+		while(i< mov1.length || i< mov2.length){
+			ComputaEscolhas(mov1[i],mov2[j]);
+			if(i<mov1.length)
+				i++;
+			if(j<mov2.length)
+				j++;
 		}
 	}
-	
-	//TEM QUE VERIFICAR PRIORIDADE: IF PARA FUGA -> IF PARA USAR ITEM -> IF PARA TROCAR POKEMON -> IF PARA ATAQUE -> IF PARA ATAQUE (VELOCIDADE)
-	public Boolean checarPrioridade(int prioridade1, int prioridade2, int velocidade1, int velocidade2) {
-		if(prioridade1 == prioridade2 && prioridade1 == 1) {
-			if(velocidade1 >= velocidade2) {
-				return true;
-				// retorna true se as prioridades são para o ataque e a velocidade do primeiro é maior ou igual a do segundo -> o primeiro realiza ataque
-			} else {
-				return false;
-				// o segundo realiza ataque pois sua velocidade é maior
-			}
-		}
-		
-		// prioridadeX -> numero entre 1 a 4 q determina a prioridade da ação : fuga -> 4; usar item -> 3; trocar pokemon -> 2 ; ataque -> 1;
-		if(prioridade1 > prioridade2) {	
-			return true;
-			// retorna true se a prioridade da ação do primeiro for maior que a prioridade da ação do segundo jogador
-			// ação do primeiro jogador ocorre antes q do segundo
-		} else {
-			return false;
-			// ação do segundo jogar ocorre antes do primeiro
-		}
-		
-	}
-	
-	
-	//TEM QUE CRIAR UM MÃ‰TODO PARA VERIFICAR A PRIORIDADE DO FUGA, TROCA DE POKEMON, USO DO ITEM E ATAQUE
-	//TEM QUE CRIAR UM MÃ‰TODO PARA A MAIN OU CLASSE PARA VERIFICAR A OPÃ‡ÃƒO DO PLAYER E DESENCADEAR OS EVENTOS E CADA CICLO
+	*/
 	//VER COMO O RUN() FUNCIONA, SE ELE CONTINUA O VETOR ATÃ‰ ACABAR OS 100 EVENTOS, OU TEMOS QUE PARA-LO
 	
 	public static void main(String[] args){
+		Batalha bt = new Batalha();
+		// 1 - fuga, 2~6- troca pelo 1~5, 7 - super potion, 8 - potion 
+		// 9 -> ataque 0, 10 -> ataque 1, 11 -> ataque 2, 12 -> ataque 3
+		bt.ComputaEscolhas(9, 9);
+		bt.ComputaEscolhas(10, 10);
+		bt.ComputaEscolhas(11,  11);
+		bt.ComputaEscolhas(12, 12);
 		
-		
+		bt.run();
 		
 	}
 
