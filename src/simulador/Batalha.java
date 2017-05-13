@@ -39,18 +39,18 @@ public class Batalha extends Controller{
 	Potion Pocao = new Potion("Potion", 10, 50);
 	
 	
-	Pokemon P1 = new Pokemon("Gyarados", 100, "agua", "raio", A6, A7, A8, A2);
-	Pokemon P2 = new Pokemon("Squirtle", 100, "agua","raio", A5, A7, A6, A2);
-	Pokemon P3 = new Pokemon("Raichu", 100, "raio", "terra", A1, A4, A3, A2);
-	Pokemon P4 = new Pokemon("Pichu", 100, "raio", "terra", A1, A20, A3, A2);
-	Pokemon P5 = new Pokemon("Mew", 100, "psico", "dark", A8, A9, A11, A2);
-	Pokemon P6 = new Pokemon("MewTwo", 100, "psico", "dark", A8, A9, A10, A2);
-	Pokemon P7 = new Pokemon("Rolezera", 100, "dark", "psico", A12, A13, A14, A15);//curtissaum, ficar, ideia errada, sacrificar
-	Pokemon P8 = new Pokemon("Gato do Role", 100, "dark", "psico", A16, A17, A18, A19);//brutos, chega bejando, xaveco, enaltecer
-	Pokemon P9 = new Pokemon("Arbok", 100, "veneno", "dragao", A2, A5, A21, A22);
-	Pokemon P10 = new Pokemon("Dragonite", 100, "dragao", "veneno", A8, A23, A2, A24);
-	Pokemon P11 = new Pokemon("Charmander", 100, "fogo", "agua", A2, A3, A25, A26);	
-	Pokemon P12 = new Pokemon("Rubbish", 100, "terra", "agua", A5, A27, A28, A29);
+	Pokemon P1 = new Pokemon("Gyarados", 	100, "agua", 	"raio",		A6,		A7, 	A8, 	A2);
+	Pokemon P2 = new Pokemon("Squirtle", 	100, "agua",	"raio",		A5,		A7, 	A6, 	A2);
+	Pokemon P3 = new Pokemon("Raichu", 		100, "raio", 	"terra", 	A1, 	A4, 	A3, 	A2);
+	Pokemon P4 = new Pokemon("Pichu", 		100, "raio", 	"terra",	A1,		A20, 	A3, 	A2);
+	Pokemon P5 = new Pokemon("Mew", 		100, "psico",	"dark",	 	A8,		A9, 	A11, 	A2);
+	Pokemon P6 = new Pokemon("MewTwo", 		100, "psico",	"dark",	 	A8,		A9, 	A10, 	A2);
+	Pokemon P7 = new Pokemon("Rolezera", 	100, "dark", 	"psico",	A12,	A13,	A14, 	A15);//curtissaum, ficar, ideia errada, sacrificar
+	Pokemon P8 = new Pokemon("Gato do Role",100, "dark", 	"psico",	A16,	A17, 	A18, 	A19);//brutos, chega bejando, xaveco, enaltecer
+	Pokemon P9 = new Pokemon("Arbok", 		100, "veneno", 	"dragao",	A2,		A5, 	A21, 	A22);
+	Pokemon P10 = new Pokemon("Dragonite", 	100, "dragao", 	"veneno", 	A8,	 	A23, 	A2, 	A24);
+	Pokemon P11 = new Pokemon("Charmander", 100, "fogo", 	"agua", 	A2,	 	A3, 	A25, 	A26);	
+	Pokemon P12 = new Pokemon("Rubbish", 	100, "terra", 	"agua", 	A5,	 	A27, 	A28, 	A29);
 	
 	Treinador t1 = new Treinador("Trash", P1, P2, P3, P4, P5, P6);
 	Treinador t2 = new Treinador("Dusty", P7, P8, P9, P10, P11, P12);
@@ -69,7 +69,7 @@ public class Batalha extends Controller{
 			this.description();
 		};
 		public String description(){
-			return "O vencedor da batalha Ã©: "+Vencedor.pegaNome()+"\nE o perdedor Ã©: "+Perdedor.pegaNome();
+			return "O vencedor da batalha eh: "+Vencedor.pegaNome()+"\nE o perdedor eh: "+Perdedor.pegaNome();
 		} 
 	}
 
@@ -162,6 +162,7 @@ public class Batalha extends Controller{
 		}
 		//Se os pokemons estao atacando:
 		if(mov1 >= 9 && mov1 <= 12 && mov2 >= 9 && mov2 <= 12){
+			Pokemon aux;
 		//	Boolean fraq = false;
 			if(t1.pokemon[0].status == true && t2.pokemon[0].status == true){
 				//seta o numero dos ataques no vetor ataque de pokemon
@@ -174,21 +175,21 @@ public class Batalha extends Controller{
 					//	fraq = true;
 					}
 					System.out.println("ATAQUE NORMAL DO POKE COM MAIS SPD");
+					aux = t2.pokemon[0];
 					Ataque ( t1, t2, t1.pokemon[0].hab[at1] );
 			//		if(fraq = true) {
 			//			System.out.print("Ataque super efetivo!");
 			//		}
 					
 					//caso o pokemon morra, ele nao pode mais atacar
-					if(t1.pokemon[0].hp - t2.pokemon[0].hab[at2].pegaDano() >= 0){
-						
+					if(aux.hp >  t1.pokemon[0].hab[at1].pegaDano()){
 						// o contra ataque tbm tem q checar fraqueza
 						if(t2.pokemon[0].pegaTipo().equals(t1.pokemon[0].pegaFraqueza())){
 							//t2.pokemon[0].hab[at1].dano = t2.pokemon[0].hab[at1].dano*1.5;
 							t2.pokemon[0].hab[at2].setDano(t2.pokemon[0].hab[at2].pegaDano() * 1.5);
 						}
 						
-						System.out.println("ATAQUE NORMAL, TURNO DO POKE COM MENOS SPD");
+						System.out.println("ATAQUE NORMAL NA DO POKEMON MAIS LENTO");
 						Ataque ( t2, t1, t2.pokemon[0].hab[at2] );
 						
 						// voltar ao dano normal
@@ -212,9 +213,9 @@ public class Batalha extends Controller{
 					}
 					System.out.println("ATAQUE NORMAL");
 					Ataque ( t2, t1, t2.pokemon[0].hab[at2]);
-					
+					aux = t1.pokemon[0];
 					//caso o pokemon morra, ele nao pode mais atacar
-					if(t2.pokemon[0].hp - t1.pokemon[0].hab[at1].pegaDano() >= 0){
+					if(aux.hp > t1.pokemon[0].hab[at1].pegaDano()){
 						
 						// contra ataque tem q checar fraqueza
 						if(t1.pokemon[0].pegaTipo().equals(t2.pokemon[0].pegaFraqueza())){
@@ -222,7 +223,7 @@ public class Batalha extends Controller{
 							t1.pokemon[0].hab[at1].setDano(t1.pokemon[0].hab[at1].pegaDano() * 1.5);
 						}
 						
-						System.out.println("ATAQUE NORMAL, TURNO DO POKE COM MENOS SPD");
+						System.out.println("ATAQUE NORMAL, TURNO DO POKE COM MENOS VELOCIDADE");
 						Ataque ( t1, t2, t1.pokemon[0].hab[at1]);
 						
 						// voltar ao dano normal
@@ -246,7 +247,6 @@ public class Batalha extends Controller{
 		if(mov1 >= 9 && mov1 <=12 && mov2 < 9){
 			int at1 = mov1-9;
 			if(t1.pokemon[0].status == true && t2.pokemon[0].status == true){
-				System.out.println("4");
 				Ataque ( t1, t2, t1.pokemon[0].hab[at1]);
 			}	
 		}
@@ -256,7 +256,6 @@ public class Batalha extends Controller{
 	//			System.out.println("5");
 	//			Ataque ( t2, t1, t2.pokemon[0].hab[at2]);	
 	//		}
-				System.out.println("5");
 				Ataque ( t2, t1, t2.pokemon[0].hab[at2]);	
 		}
 		

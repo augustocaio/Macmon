@@ -22,14 +22,14 @@ public class Treinador {
 	public void curar(Potion a){
 		if(this.pokemon[0].hp>=100){
 			this.pokemon[0].hp = 100;
-			System.out.println("O pokemon "+this.pokemon[0].pegaNome()+" foi curado em "+a.pegaNome()+ " em "+a.pegaEfeito()+ "hp e tem agora " +this.pokemon[0].pegaHP() +" de hp");
+			System.out.println("O pokemon "+this.pokemon[0].pegaNome()+" foi curado em "+a.pegaNome()+ " em "+a.pegaEfeito()+ "hp e tem agora " +this.pokemon[0].pegaHP() +"HP");
 		}
 		if(this.pokemon[0].hp>0 && this.pokemon[0].hp<= 100){
 			this.pokemon[0].hp+= a.pegaEfeito();
 			if(this.pokemon[0].hp >= 100) {
 				this.pokemon[0].hp = 100;
 			}
-			System.out.println("O pokemon "+this.pokemon[0].pegaNome()+" foi curado com "+a.pegaNome()+ " em "+a.pegaEfeito()+"hp e tem agora " +this.pokemon[0].pegaHP() +" de hp");
+			System.out.println("O pokemon "+this.pokemon[0].pegaNome()+" foi curado com "+a.pegaNome()+ " em "+a.pegaEfeito()+"hp e tem agora " +this.pokemon[0].pegaHP() +"HP");
 		}
 
 	}
@@ -50,9 +50,9 @@ public class Treinador {
 		}
 		if(k!=0 && k<=5)
 			System.out.println(aux.pegaNome()+" foi substituido por "+pokemon[0].pegaNome());
-		if(k>=5){
+		if(k>=5 && pokemon[0].status == false){
 			status = false;
-			System.out.println("O treinador "+pegaNome()+" perdeu a batalha por não possuir mais pokemons para combate");
+			System.out.println("O treinador "+pegaNome()+" perdeu a batalha por nao possuir mais pokemons para combate");
 		}
 	}
 	
