@@ -20,6 +20,7 @@ public class Treinador {
 		return this.nome;
 	}
 	public void curar(Potion a){
+<<<<<<< HEAD
 		if(this.pokemon[0].hp>0){
 			this.pokemon[0].hp+= a.pegaEfeito();
 		}
@@ -30,11 +31,33 @@ public class Treinador {
 	public void corre(){
 		status = false;
 		System.out.println("O treinador "+pegaNome()+" perdeu a batalha.");
+=======
+		if(this.pokemon[0].hp>=100){
+			this.pokemon[0].hp = 100;
+			System.out.println("O pokemon "+this.pokemon[0].pegaNome()+" foi curado em "+a.pegaNome()+ " em "+a.pegaEfeito()+ "hp e tem agora " +this.pokemon[0].pegaHP() +" de hp");
+		}
+		if(this.pokemon[0].hp>0 && this.pokemon[0].hp<= 100){
+			this.pokemon[0].hp+= a.pegaEfeito();
+			if(this.pokemon[0].hp >= 100) {
+				this.pokemon[0].hp = 100;
+			}
+			System.out.println("O pokemon "+this.pokemon[0].pegaNome()+" foi curado com "+a.pegaNome()+ " em "+a.pegaEfeito()+"hp e tem agora " +this.pokemon[0].pegaHP() +" de hp");
+		}
+
+	}
+	public void corre(){
+		status = false;
+		System.out.println("O treinador "+pegaNome()+" fugiu, perdendo a batalha.");
+>>>>>>> jun
 	}
 	public void troca(int i){
 		Pokemon aux = this.pokemon[0];
 		int k = i ;
+<<<<<<< HEAD
 		while(k<5){
+=======
+		while(k<6){
+>>>>>>> jun
 			this.pokemon[0] = pokemon[k];
 			if(pokemon[0].status ==  true){
 				pokemon[k] = pokemon[0];
@@ -42,11 +65,19 @@ public class Treinador {
 			}
 			k++;
 		}
+<<<<<<< HEAD
 		if(k!=0)
 			System.out.println(aux.pegaNome()+" foi substituido por "+pokemon[0].pegaNome());
 		if(k>=5){
 			status = false;
 			System.out.println("O treinador "+pegaNome()+" perdeu a batalha.");
+=======
+		if(k!=0 && k<=5)
+			System.out.println(aux.pegaNome()+" foi substituido por "+pokemon[0].pegaNome());
+		if(k>=5){
+			status = false;
+			System.out.println("O treinador "+pegaNome()+" perdeu a batalha por não possuir mais pokemons para combate");
+>>>>>>> jun
 		}
 	}
 	

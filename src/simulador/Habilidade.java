@@ -4,7 +4,7 @@ public class Habilidade {
 	private String nome;
 	public double dano;
 	private int velocidade;
-	public Habilidade(String nome, int dano, int velocidade){
+	public Habilidade(String nome, double dano, int velocidade){
 		this.nome = nome;
 		this.dano = dano;
 		this.velocidade = velocidade;
@@ -16,6 +16,13 @@ public class Habilidade {
 	public double pegaDano(){
 		return this.dano;
 	}
+<<<<<<< HEAD
+=======
+	
+	public void setDano(double d){
+		this.dano = d;
+	}
+>>>>>>> jun
 
 	public int pegaVelocidade(){
 		return this.velocidade;
