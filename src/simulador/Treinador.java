@@ -29,7 +29,7 @@ public class Treinador {
 	}
 	public void corre(){
 		status = false;
-		System.out.println("O treinador "+pegaNome()+" perdeu a batalha.");
+		System.out.println("O treinador "+pegaNome()+" fugiu, perdendo a batalha.");
 	}
 	public void troca(int i){
 		Pokemon aux = this.pokemon[0];

@@ -4,35 +4,35 @@ import java.util.Arrays;
 
 public class Batalha extends Controller{
 	// mudar valores de velocidade dos ataques para algo "decente"
-	Habilidade A1 = new Habilidade("Trovom", 35, 4); // pichu, raichu
-	Habilidade A2 = new Habilidade("Rabada", 40, 5); // pichu, raichu, gyarados,  mew, mewtwo, arbok, squirtle, charmander
-	Habilidade A3 = new Habilidade("Patada", 25, 2); // pichu, raichu
-	Habilidade A4 = new Habilidade("Chidori", 50, 6); // raichu
-	Habilidade A5 = new Habilidade("Cuspe", 20, 1); // arbok, squirtle, rubbish
-	Habilidade A6 = new Habilidade("Enxague", 40, 4); // gyarados, squirtle
-	Habilidade A7 = new Habilidade("Jato", 45, 5); // gyarados, squirtle
-	Habilidade A8 = new Habilidade("Hyper Beam", 60, 7); // gyarados, mewtwo, mew, dragonite
-	Habilidade A9 = new Habilidade("Empurrom", 40, 5); //mew, mewtwo
-	Habilidade A10 = new Habilidade("Surto Psicotico", 70, 9);//mewtwo
-	Habilidade A11 = new Habilidade("Piripaque", 70, 9);//mew
-	Habilidade A12 = new Habilidade("Curticao", 20, 1);//rolezera
-	Habilidade A13 = new Habilidade("Ficar", 35, 4);//rolezera
-	Habilidade A14 = new Habilidade("Ideia-Errada", 40, 5);//rolezera
-	Habilidade A15 = new Habilidade("Sacrificio", 70, 9);//rolezera
-	Habilidade A16 = new Habilidade("Ataques Muito-Brutos", 65, 8);//gato
-	Habilidade A17 = new Habilidade("Invocacao", 50, 6);//gato
-	Habilidade A18 = new Habilidade("Xaveco", 30, 3);//gato
-	Habilidade A19 = new Habilidade("Enaltecer", 40, 4);//gato
-	Habilidade A20 = new Habilidade("Faisca", 40, 5);// pichu
-	Habilidade A21 = new Habilidade("Mordida", 35, 4);// arbok
-	Habilidade A22 = new Habilidade("Poison Sting", 35, 4);// arbok
-	Habilidade A23 = new Habilidade("Furacao", 80, 10); //dragonite
-	Habilidade A24 = new Habilidade("Dragon Tail", 50, 6);// dragonite
-	Habilidade A25 = new Habilidade("LanÃ§a-Chamas", 50, 6);
-	Habilidade A26 = new Habilidade("Bola de fogo", 45, 5);
-	Habilidade A27 = new Habilidade("Toxico", 50, 6);
-	Habilidade A28 = new Habilidade("Toxic Spray", 35, 4);
-	Habilidade A29 = new Habilidade("Jogar Terra", 25, 2);
+	Habilidade A1 = new Habilidade("Trovom", 35, 85); // pichu, raichu
+	Habilidade A2 = new Habilidade("Rabada", 40, 80); // pichu, raichu, gyarados,  mew, mewtwo, arbok, squirtle, charmander
+	Habilidade A3 = new Habilidade("Patada", 25, 95); // pichu, raichu
+	Habilidade A4 = new Habilidade("Chidori", 50, 70); // raichu
+	Habilidade A5 = new Habilidade("Cuspe", 20, 100); // arbok, squirtle, rubbish
+	Habilidade A6 = new Habilidade("Enxague", 40, 80); // gyarados, squirtle
+	Habilidade A7 = new Habilidade("Jato", 45, 75); // gyarados, squirtle
+	Habilidade A8 = new Habilidade("Hyper Beam", 60, 65); // gyarados, mewtwo, mew, dragonite
+	Habilidade A9 = new Habilidade("Empurrom", 40, 80); //mew, mewtwo
+	Habilidade A10 = new Habilidade("Surto Psicotico", 70, 60);//mewtwo
+	Habilidade A11 = new Habilidade("Piripaque", 70, 60);//mew
+	Habilidade A12 = new Habilidade("Curticao", 20, 100);//rolezera
+	Habilidade A13 = new Habilidade("Ficar", 35, 85);//rolezera
+	Habilidade A14 = new Habilidade("Ideia-Errada", 40, 90);//rolezera
+	Habilidade A15 = new Habilidade("Sacrificio", 70, 60);//rolezera
+	Habilidade A16 = new Habilidade("Ataques Muito-Brutos", 65, 65);//gato
+	Habilidade A17 = new Habilidade("Invocacao", 50, 70);//gato
+	Habilidade A18 = new Habilidade("Xaveco", 30, 90);//gato
+	Habilidade A19 = new Habilidade("Enaltecer", 40, 80);//gato
+	Habilidade A20 = new Habilidade("Faisca", 40, 80);// pichu
+	Habilidade A21 = new Habilidade("Mordida", 35, 85);// arbok
+	Habilidade A22 = new Habilidade("Poison Sting", 35, 85);// arbok
+	Habilidade A23 = new Habilidade("Furacao", 80, 50); //dragonite
+	Habilidade A24 = new Habilidade("Dragon Tail", 50, 70);// dragonite
+	Habilidade A25 = new Habilidade("LanÃ§a-Chamas", 50, 70);
+	Habilidade A26 = new Habilidade("Bola de fogo", 45, 75);
+	Habilidade A27 = new Habilidade("Toxico", 50, 70);
+	Habilidade A28 = new Habilidade("Toxic Spray", 35, 85);
+	Habilidade A29 = new Habilidade("Jogar Terra", 25, 95);
 	
 	Potion SuperPocao = new Potion("Super Potion", 5, 100);
 	Potion Pocao = new Potion("Potion", 10, 50);
@@ -79,6 +79,9 @@ public class Batalha extends Controller{
 		if(atacante == t1){
 			t2.pokemon[0].setVida(habilidade.pegaDano());
 			if(t2.pokemon[0].status == false){
+				System.out.println("O Pokemon "+atacante.pokemon[0].pegaNome()+" atacou "+atacado.pokemon[0].pegaNome()+" com "+atacante.pokemon[0].hab[index].pegaNome()+
+						"\n"+atacado.pokemon[0].pegaNome()+" perdeu "+habilidade.pegaDano()+"HP, agora tem "+atacado.pokemon[0].hp+"HP\n---------------------------------------");
+				System.out.println(t2.pokemon[0].pegaNome()+" agora esta invalido.");
 				t2.troca(1);
 				return;
 			}
@@ -151,7 +154,7 @@ public class Batalha extends Controller{
 		if(mov2 == 8){
 			t2.curar(Pocao);
 		}
-		//Se os personagens estao atacando:
+		//Se os pokemons estao atacando:
 		if(mov1 >= 9 && mov1 <= 12 && mov2 >= 9 && mov2 <= 12){
 			if(t1.pokemon[0].status == true && t2.pokemon[0].status == true){
 				//seta o numero dos ataques no vetor ataque de pokemon
@@ -266,10 +269,13 @@ public class Batalha extends Controller{
 		Batalha bt = new Batalha();
 		// 1 - fuga, 2~6- troca pelo 1~5, 7 - super potion, 8 - potion 
 		// 9 -> ataque 0, 10 -> ataque 1, 11 -> ataque 2, 12 -> ataque 3
-		bt.ComputaEscolhas(9, 9);
-		bt.ComputaEscolhas(10, 10);
+		// testar fraqueza
+		// treinador 2 ganha do 1 por eliminação de pokemons, usar aleatoriamente poções sei lá
+		bt.ComputaEscolhas(9, 9); // gyarados 80 hp / rolezera 60hp
+		bt.ComputaEscolhas(10, 10); // gyarados 45 hp / rolezera 15hp
 		bt.ComputaEscolhas(11,  11);
-		bt.ComputaEscolhas(12, 12);
+//		bt.ComputaEscolhas(12, 12);
+
 		
 		bt.run();
 		
