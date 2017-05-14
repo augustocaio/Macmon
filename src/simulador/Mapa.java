@@ -29,10 +29,12 @@ public class Mapa {
 	public boolean ehGrama(int i) {
 		if(i<this.tamanho) {
 			return mapa[i];
+			// tudo menos o ultimo quadrado é grama
 		} else {
 			return false;
 		}
 	}
+
 	
 	public int getTamanho() {
 		return this.tamanho;
@@ -57,7 +59,7 @@ public class Mapa {
 		public void action() {
 			Random r = new Random();
 			int v = r.nextInt(10);
-			// 70% sei lá
+			// 70%, sei lá, de chance de batalha
 			if(ehGrama(i) && v<8) {
 				// batalha
 			}
@@ -70,5 +72,8 @@ public class Mapa {
 		}
 	}
 	
+	public static void main(String[] args) {
+		
+	}
 
 }
