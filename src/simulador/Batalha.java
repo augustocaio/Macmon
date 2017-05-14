@@ -541,9 +541,10 @@ public class Batalha extends Controller{
 				
 				Item[] i1 = {Pocao, SuperPocao};
 				Item[] i2 = {Pocao, SuperPocao};
-				
-				Treinador t1 = new Treinador("Trash", false, P1, P2, P3, P4, P5, P6, i1);
-				Treinador t2 = new Treinador("Dusty", false, P7, P8, P9, P10, P11, P12, i2);
+				Pokemon[] p1 = {P1, P2, P3, P4, P5, P6};
+				Pokemon[] p2 = {P7, P8, P9, P10, P11, P12};
+				Treinador t1 = new Treinador("Trash", false, p1 , i1);
+				Treinador t2 = new Treinador("Dusty", false, p2, i2);
 		Batalha bt = new Batalha(t1, t2);
 		// 1 - fuga, 2~6- troca pelo 1~5, 7 - super potion, 8 - potion 
 		// 9 -> ataque 0, 10 -> ataque 1, 11 -> ataque 2, 12 -> ataque 3
