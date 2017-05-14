@@ -5,8 +5,10 @@ public class Treinador {
 	private String nome;
 	public boolean status;
 	public String movimento;
+	public boolean wild;
+	Item itens[];
 	
-	public Treinador( String nome, Pokemon p1, Pokemon p2, Pokemon p3, Pokemon p4, Pokemon p5, Pokemon p6){
+	public Treinador( String nome, boolean selvagem, Pokemon p1, Pokemon p2, Pokemon p3, Pokemon p4, Pokemon p5, Pokemon p6, Item[] itens){
 		this.nome = nome;
 		this.pokemon[0] = p1;
 		this.pokemon[1] = p2;
@@ -15,6 +17,8 @@ public class Treinador {
 		this.pokemon[4] = p5;
 		this.pokemon[5] = p6;
 		this.status = true;
+		wild = selvagem;
+		this.itens = itens;
 	}
 	public Treinador( Pokemon p1) {
 		this.pokemon[0] = p1;

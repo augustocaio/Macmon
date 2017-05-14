@@ -56,8 +56,16 @@ public class Mapa extends Controller {
 	Pokemon P11 = new Pokemon("Charmander", 100, "fogo", 	"agua", 	A2,	 	A3, 	A25, 	A26);	
 	Pokemon P12 = new Pokemon("Rubbish", 	100, "terra", 	"agua", 	A5,	 	A27, 	A28, 	A29);
 	
-	Treinador t1 = new Treinador("Trash", P1, P2, P3, P4, P5, P6);
-	Treinador t2 = new Treinador("Dusty", P7, P8, P9, P10, P11, P12);
+	Item[] i1 = {Pocao, SuperPocao};
+	Item[] i2 = {Pocao, SuperPocao};
+	
+	Potion SuperPocao = new Potion("Super Potion", 5, 100);
+	Potion Pocao = new Potion("Potion", 10, 50);
+	
+	Treinador t1 = new Treinador("Trash", false, P1, P2, P3, P4, P5, P6, i1);
+	Treinador t2 = new Treinador("Dusty", false, P7, P8, P9, P10, P11, P12, i2);
+	
+
 	
 	public Mapa(int t, Treinador t1, Treinador t2) {
 		this.tamanho = t;
@@ -74,7 +82,7 @@ public class Mapa extends Controller {
 	public boolean ehGrama(int i) {
 		if(i<this.tamanho) {
 			return mapa[i];
-			// tudo menos o ultimo quadrado é grama
+			// tudo menos o ultimo quadrado ï¿½ grama
 		} else {
 			return false;
 		}
@@ -104,7 +112,7 @@ public class Mapa extends Controller {
 		public void action() {
 			Random r = new Random();
 			int v = r.nextInt(10);
-			// 70%, sei lá, de chance de batalha com poke selvagem
+			// 70%, sei lï¿½, de chance de batalha com poke selvagem
 			if(ehGrama(indice) && v<6) {
 				if(v == 0) {
 					twild = new Treinador(P3);
