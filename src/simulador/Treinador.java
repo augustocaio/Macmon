@@ -28,47 +28,50 @@ public class Treinador {
 	String pegaNome(){
 		return this.nome;
 	}
-	
-	//metodo de cura do treinador
 	public void curar(Potion a){
 		if(this.pokemon[0].hp>=100){
 			this.pokemon[0].hp = 100;
-			System.out.println("O pokemon "+this.pokemon[0].pegaNome()+" foi curado em "+a.pegaNome()+ " em "+a.pegaEfeito()+ "hp e tem agora " +this.pokemon[0].pegaHP() +"HP");
+			//System.out.println("O pokemon "+this.pokemon[0].pegaNome()+" foi curado em "+a.pegaNome()+ " em "+a.pegaEfeito()+ "hp e tem agora " +this.pokemon[0].pegaHP() +"HP");
 		} else {
 			if(this.pokemon[0].hp>0 && this.pokemon[0].hp <=100){
 			this.pokemon[0].hp+= a.pegaEfeito();
 			if(this.pokemon[0].hp >= 100) {
 				this.pokemon[0].hp = 100;
 			}
-			System.out.println("O pokemon "+this.pokemon[0].pegaNome()+" foi curado com "+a.pegaNome()+ " em "+a.pegaEfeito()+"hp e tem agora " +this.pokemon[0].pegaHP() +"HP");
+			//System.out.println("O pokemon "+this.pokemon[0].pegaNome()+" foi curado com "+a.pegaNome()+ " em "+a.pegaEfeito()+"hp e tem agora " +this.pokemon[0].pegaHP() +"HP");
 		}
 		}
 	}
-	
-	//metodo de fuga do treinador
 	public void corre(){
 		status = false;
 		System.out.println("O treinador "+pegaNome()+" fugiu, perdendo a batalha.");
 	}
-	
-	//metodo de troca do treinador
 	public void troca(int i){
 		Pokemon aux = this.pokemon[0];
 		int k = i ;
+		System.out.println("Antes");
+		for(int m = 0; m<5; m++){
+			System.out.println("O Pokemon "+pokemon[m].pegaNome()+" de indice "+m+ " e " +pokemon[m].hp+ "HP status " +pokemon[m].status);
+		}
 		while(k<6){
-			this.pokemon[0] = pokemon[k];
-			if(pokemon[0].status ==  true){
-				pokemon[k] = pokemon[0];
+			if(pokemon[k].status ==  true){
+				pokemon[0] = pokemon[k];
+				pokemon[k] = aux;
 				break;
 			}
 			k++;
 		}
+		System.out.println("Depois");
+		for(int m = 0; m<5; m++){
+			System.out.println("O Pokemon "+pokemon[m].pegaNome()+" de indice "+m+ " e " +pokemon[m].hp+ "HP status " +pokemon[m].status);
+		}
 		if(k!=0 && k<=5)
-			System.out.println(aux.pegaNome()+" foi substituido por "+pokemon[0].pegaNome());
+			//System.out.println(aux.pegaNome()+" foi substituido por "+pokemon[0].pegaNome());
 		if(k>=5 && pokemon[0].status == false){
 			status = false;
-			System.out.println("O treinador "+pegaNome()+" perdeu a batalha por nao possuir mais pokemons para combate");
+			//System.out.println("O treinador "+pegaNome()+" perdeu a batalha por nao possuir mais pokemons para combate");
 		}
+		System.out.println("\n---------------------------------------");
 	}
 	
 }
