@@ -16,6 +16,11 @@ public class Treinador {
 		this.pokemon[5] = p6;
 		this.status = true;
 	}
+	public Treinador( Pokemon p1) {
+		this.pokemon[0] = p1;
+		this.status = true;
+	}
+	
 	String pegaNome(){
 		return this.nome;
 	}
