@@ -28,6 +28,8 @@ public class Treinador {
 	String pegaNome(){
 		return this.nome;
 	}
+	
+	//metodo de cura do treinador
 	public void curar(Potion a){
 		if(this.pokemon[0].hp>=100){
 			this.pokemon[0].hp = 100;
@@ -42,10 +44,14 @@ public class Treinador {
 		}
 		}
 	}
+	
+	//metodo de fuga do treinador
 	public void corre(){
 		status = false;
 		System.out.println("O treinador "+pegaNome()+" fugiu, perdendo a batalha.");
 	}
+	
+	//metodo de troca do treinador
 	public void troca(int i){
 		Pokemon aux = this.pokemon[0];
 		int k = i ;
