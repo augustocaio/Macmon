@@ -7,7 +7,7 @@ public class Batalha extends Controller{
 	Treinador t2;
 	public Batalha (Treinador tr1, Treinador tr2){
 		t1 = tr1;
-		t2 = t2;
+		t2 = tr2;
 	}
 	
 	// 1 - ATAQUE DE UM POKEMON A OUTRO
