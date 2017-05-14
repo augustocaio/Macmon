@@ -62,7 +62,6 @@ public class Batalha extends Controller{
 		Treinador atacante, atacado;
 		Habilidade habilidade;
 		double dano;
-		int index = 0;
 		
 		//No construtor deve por o treinador, a habilidade do pokemon t1.p[0].hab[0]
 		public Ataque (long eventTime, Treinador atacante, Treinador atacado, Habilidade habilidade ){
@@ -84,9 +83,9 @@ public class Batalha extends Controller{
 					for(int m = 0; m<5; m++){
 						System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
 					}*/
-					System.out.println(description());
-					addEvent(new Troca(System.currentTimeMillis(), t2, 1));
-					run();
+					//System.out.println(description());
+					//addEvent(new Troca(System.currentTimeMillis(), t2, 1));
+					//run();
 					/*System.out.println("Depois");
 					for(int m = 0; m<5; m++){
 						System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
@@ -105,9 +104,9 @@ public class Batalha extends Controller{
 					//System.out.println("O Pokemon "+atacante.pokemon[0].pegaNome()+" atacou "+atacado.pokemon[0].pegaNome()+" com "+atacante.pokemon[0].hab[index].pegaNome()+
 					//		"\n"+atacado.pokemon[0].pegaNome()+" perdeu "+habilidade.pegaDano()+"HP, agora tem "+atacado.pokemon[0].hp+"HP\n---------------------------------------");
 					//System.out.println(t1.pokemon[0].pegaNome()+" agora esta invalido.");
-					System.out.println(description());
-					addEvent(new Troca(System.currentTimeMillis(), t1, 1));
-					run();
+					//System.out.println(description());
+					//addEvent(new Troca(System.currentTimeMillis(), t1, 1));
+					//run();
 					/*System.out.println("Depois");
 					for(int m = 0; m<5; m++){
 						System.out.println("O Pokemon "+t1.pokemon[m].pegaNome()+" de indice "+m+ " status " +t1.pokemon[m].status);
@@ -253,11 +252,11 @@ public class Batalha extends Controller{
 				if(t1.pokemon[0].status == true && t2.pokemon[0].status == true){
 					//seta o numero dos ataques no vetor ataque de pokemon
 					int at1 = mov1-9, at2 = mov2-9;
-					
+					//System.out.println("1");
 					if(t1.pokemon[0].hab[at1].pegaVelocidade() >= t2.pokemon[0].hab[at2].pegaVelocidade()){
-						
+						//System.out.println("2");
 						if(t1.pokemon[0].pegaTipo().equals(t2.pokemon[0].pegaFraqueza())){
-							
+							//System.out.println("3");
 							t1.pokemon[0].hab[at1].setDano(t1.pokemon[0].hab[at1].pegaDano() * 1.5);
 
 						}
@@ -265,26 +264,35 @@ public class Batalha extends Controller{
 						
 						health = t2.pokemon[0].hp;
 						damage = t1.pokemon[0].hab[at1].pegaDano();
-						
+						//System.out.println("habilidade "+t1.pokemon[0].hab[at1].pegaNome()+" dano: "+t1.pokemon[0].hab[at1].pegaDano()+" indice: "+at1);
 						addEvent(new Ataque(System.currentTimeMillis(), t1, t2, t1.pokemon[0].hab[at1] ));
 						run();
 						
-						
-						if(t1.pokemon[0].pegaTipo().equals(t2.pokemon[0].pegaFraqueza())){
-							
-							t1.pokemon[0].hab[at1].setDano(t1.pokemon[0].hab[at1].pegaDano() / 1.5);
-
+						if(t2.pokemon[0].hp<=0){
+							t2.pokemon[0].status = false;
+							//System.out.println("O Pokemon "+atacante.pokemon[0].pegaNome()+" atacou "+atacado.pokemon[0].pegaNome()+" com "+atacante.pokemon[0].hab[index].pegaNome()+
+							//		"\n"+atacado.pokemon[0].pegaNome()+" perdeu "+habilidade.pegaDano()+"HP, agora tem "+atacado.pokemon[0].hp+"HP\n---------------------------------------");
+							//System.out.println(t2.pokemon[0].pegaNome()+" agora esta invalido.");
+							/*System.out.println("Antes");
+							for(int m = 0; m<5; m++){
+								System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
+							}*/
+							addEvent(new Troca(System.currentTimeMillis(), t2, 1));
+							run();
+							/*System.out.println("Depois");
+							for(int m = 0; m<5; m++){
+								System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
+							}*/
 						}
-				//		if(fraq == true) {
-				//			System.out.print("Ataque super efetivo!");
-				//		}
+						
+						
 						
 						//caso o pokemon morra, ele nao pode mais atacar
 						if(health>damage){
-							
+							//System.out.println("5");
 							// o contra ataque tbm tem q checar fraqueza
 							if(t2.pokemon[0].pegaTipo().equals(t1.pokemon[0].pegaFraqueza())){
-								
+								//System.out.println("6");
 								//t2.pokemon[0].hab[at1].dano = t2.pokemon[0].hab[at1].dano*1.5;
 								t2.pokemon[0].hab[at2].setDano(t2.pokemon[0].hab[at2].pegaDano() * 1.5);
 							}
@@ -292,91 +300,179 @@ public class Batalha extends Controller{
 							//System.out.println("ATAQUE NORMAL NA DO POKEMON MAIS LENTO");
 							addEvent(new Ataque(System.currentTimeMillis(), t2, t1, t2.pokemon[0].hab[at2] ));
 							run();
-							
+							if(t1.pokemon[0].hp<=0){
+								t1.pokemon[0].status = false;
+								//System.out.println("O Pokemon "+atacante.pokemon[0].pegaNome()+" atacou "+atacado.pokemon[0].pegaNome()+" com "+atacante.pokemon[0].hab[index].pegaNome()+
+								//		"\n"+atacado.pokemon[0].pegaNome()+" perdeu "+habilidade.pegaDano()+"HP, agora tem "+atacado.pokemon[0].hp+"HP\n---------------------------------------");
+								//System.out.println(t2.pokemon[0].pegaNome()+" agora esta invalido.");
+								/*System.out.println("Antes");
+								for(int m = 0; m<5; m++){
+									System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
+								}*/
+								addEvent(new Troca(System.currentTimeMillis(), t1, 1));
+								run();
+								/*System.out.println("Depois");
+								for(int m = 0; m<5; m++){
+									System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
+								}*/
+							}
 							// voltar ao dano normal
 							if(t2.pokemon[0].pegaTipo().equals(t1.pokemon[0].pegaFraqueza())){
-								
+								//System.out.println("7");
 								t2.pokemon[0].hab[at2].setDano(t2.pokemon[0].hab[at2].pegaDano() / 1.5);
 								//t2.pokemon[0].hab[at2].dano = t2.pokemon[0].hab[at2].dano/1.5;
 							} 
 							
-						} else {
-							System.out.println("9");
-							
+						} 
+						
+						if(t1.pokemon[0].pegaTipo().equals(t2.pokemon[0].pegaFraqueza())){
+							//System.out.println("4");
+							t1.pokemon[0].hab[at1].setDano(t1.pokemon[0].hab[at1].pegaDano() / 1.5);
+
 						}
 						
 						if(t1.pokemon[0].pegaTipo().equals(t2.pokemon[0].pegaFraqueza())){
-							
+							//System.out.println("8");
 							//t1.pokemon[0].hab[at1].dano = t1.pokemon[0].hab[at1].dano/1.5;
 							t1.pokemon[0].hab[at1].setDano(t1.pokemon[0].hab[at1].pegaDano() / 1.5);
 						} 
 						
 					} else {
-						System.out.println("11");
+						//System.out.println("9");
 						if(t2.pokemon[0].pegaTipo().equals(t1.pokemon[0].pegaFraqueza())){
-							
+							//System.out.println("10");
 							//t2.pokemon[0].hab[at2].dano = t2.pokemon[0].hab[at2].dano*1.5;
 							t2.pokemon[0].hab[at2].setDano(t2.pokemon[0].hab[at2].pegaDano() * 1.5);
 						}
 						//System.out.println("ATAQUE NORMAL");
-						
 						addEvent(new Ataque(System.currentTimeMillis(), t2, t1, t2.pokemon[0].hab[at2] ));
 						run();
 						
-						if(t2.pokemon[0].pegaTipo().equals(t1.pokemon[0].pegaFraqueza())){
-							
-							//t2.pokemon[0].hab[at2].dano = t2.pokemon[0].hab[at2].dano/1.5;
-							t2.pokemon[0].hab[at2].setDano(t2.pokemon[0].hab[at2].pegaDano() / 1.5);
-						} 
+						if(t1.pokemon[0].hp<=0){
+							t1.pokemon[0].status = false;
+							//System.out.println("O Pokemon "+atacante.pokemon[0].pegaNome()+" atacou "+atacado.pokemon[0].pegaNome()+" com "+atacante.pokemon[0].hab[index].pegaNome()+
+							//		"\n"+atacado.pokemon[0].pegaNome()+" perdeu "+habilidade.pegaDano()+"HP, agora tem "+atacado.pokemon[0].hp+"HP\n---------------------------------------");
+							//System.out.println(t2.pokemon[0].pegaNome()+" agora esta invalido.");
+							/*System.out.println("Antes");
+							for(int m = 0; m<5; m++){
+								System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
+							}*/
+							addEvent(new Troca(System.currentTimeMillis(), t1, 1));
+							run();
+							/*System.out.println("Depois");
+							for(int m = 0; m<5; m++){
+								System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
+							}*/
+						}
 						
 
 						health = t1.pokemon[0].hp;
 						damage = t2.pokemon[0].hab[at2].pegaDano();
 						//caso o pokemon morra, ele nao pode mais atacar
 						if(health>damage){
-							
+							//System.out.println("12");
 							// contra ataque tem q checar fraqueza
 							if(t1.pokemon[0].pegaTipo().equals(t2.pokemon[0].pegaFraqueza())){
-								
+								//System.out.println("13");
 								//t1.pokemon[0].hab[at1].dano = t1.pokemon[0].hab[at1].dano*1.5;
 								t1.pokemon[0].hab[at1].setDano(t1.pokemon[0].hab[at1].pegaDano() * 1.5);
 							}
-							
+							//System.out.println("habilidade "+t1.pokemon[0].hab[at1].pegaNome()+" dano: "+t1.pokemon[0].hab[at1].pegaDano());
 							//System.out.println("ATAQUE NORMAL, TURNO DO POKE COM MENOS VELOCIDADE");
 							addEvent(new Ataque(System.currentTimeMillis(), t1, t2, t1.pokemon[0].hab[at1] ));
 							run();
 							
+							if(t2.pokemon[0].hp<=0){
+								t2.pokemon[0].status = false;
+								//System.out.println("O Pokemon "+atacante.pokemon[0].pegaNome()+" atacou "+atacado.pokemon[0].pegaNome()+" com "+atacante.pokemon[0].hab[index].pegaNome()+
+								//		"\n"+atacado.pokemon[0].pegaNome()+" perdeu "+habilidade.pegaDano()+"HP, agora tem "+atacado.pokemon[0].hp+"HP\n---------------------------------------");
+								//System.out.println(t2.pokemon[0].pegaNome()+" agora esta invalido.");
+								/*System.out.println("Antes");
+								for(int m = 0; m<5; m++){
+									System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
+								}*/
+								addEvent(new Troca(System.currentTimeMillis(), t2, 1));
+								run();
+								/*System.out.println("Depois");
+								for(int m = 0; m<5; m++){
+									System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
+								}*/
+							}
 							// voltar ao dano normal
 							if(t1.pokemon[0].pegaTipo().equals(t2.pokemon[0].pegaFraqueza())){
-								
+								//System.out.println("14");
 								//t1.pokemon[0].hab[at1].dano = t1.pokemon[0].hab[at1].dano/1.5;
 								t1.pokemon[0].hab[at1].setDano(t1.pokemon[0].hab[at1].pegaDano() / 1.5);
 							} 
 							
 						}
 						
+						if(t2.pokemon[0].pegaTipo().equals(t1.pokemon[0].pegaFraqueza())){
+							//System.out.println("11");
+							//t2.pokemon[0].hab[at2].dano = t2.pokemon[0].hab[at2].dano/1.5;
+							t2.pokemon[0].hab[at2].setDano(t2.pokemon[0].hab[at2].pegaDano() / 1.5);
+						} 
+						
 						
 					}	
 				}
 				
 			}
+			
 			if(mov1 >= 9 && mov1 <=12 && mov2 < 9){
 				int at1 = mov1-9;
+				//System.out.println("15");
 				if(t1.pokemon[0].status == true && t2.pokemon[0].status == true){
 					addEvent(new Ataque(System.currentTimeMillis(), t1, t2, t1.pokemon[0].hab[at1] ));
 					run();
+					
+					if(t2.pokemon[0].hp<=0){
+						t2.pokemon[0].status = false;
+						//System.out.println("O Pokemon "+atacante.pokemon[0].pegaNome()+" atacou "+atacado.pokemon[0].pegaNome()+" com "+atacante.pokemon[0].hab[index].pegaNome()+
+						//		"\n"+atacado.pokemon[0].pegaNome()+" perdeu "+habilidade.pegaDano()+"HP, agora tem "+atacado.pokemon[0].hp+"HP\n---------------------------------------");
+						//System.out.println(t2.pokemon[0].pegaNome()+" agora esta invalido.");
+						/*System.out.println("Antes");
+						for(int m = 0; m<5; m++){
+							System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
+						}*/
+						addEvent(new Troca(System.currentTimeMillis(), t2, 1));
+						run();
+						/*System.out.println("Depois");
+						for(int m = 0; m<5; m++){
+							System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
+						}*/
+					}
+					
 				}	
 			}
 			if(mov2 >= 9 && mov2 <=12 && mov1 < 9){
 				int at2 = mov2-9;
+				//System.out.println("16");
 		//		if(t1.pokemon[0].status == true && t2.pokemon[0].status == true){
 		//			System.out.println("5");
 		//			Ataque ( t2, t1, t2.pokemon[0].hab[at2]);	
 		//		}
 				addEvent(new Ataque(System.currentTimeMillis(), t2, t1, t2.pokemon[0].hab[at2] ));
 				run();
+				
+				if(t1.pokemon[0].hp<=0){
+					t1.pokemon[0].status = false;
+					//System.out.println("O Pokemon "+atacante.pokemon[0].pegaNome()+" atacou "+atacado.pokemon[0].pegaNome()+" com "+atacante.pokemon[0].hab[index].pegaNome()+
+					//		"\n"+atacado.pokemon[0].pegaNome()+" perdeu "+habilidade.pegaDano()+"HP, agora tem "+atacado.pokemon[0].hp+"HP\n---------------------------------------");
+					//System.out.println(t2.pokemon[0].pegaNome()+" agora esta invalido.");
+					/*System.out.println("Antes");
+					for(int m = 0; m<5; m++){
+						System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
+					}*/
+					addEvent(new Troca(System.currentTimeMillis(), t1, 1));
+					run();
+					/*System.out.println("Depois");
+					for(int m = 0; m<5; m++){
+						System.out.println("O Pokemon "+t2.pokemon[m].pegaNome()+" de indice "+m+ " status " +t2.pokemon[m].status);
+					}*/
+				}
 			}
-			
+			System.out.println("Fim do Turno\n---------------------------------------");
 		}
 		
 		
@@ -419,7 +515,7 @@ public class Batalha extends Controller{
 				Habilidade A22 = new Habilidade("Poison Sting",          35,        85);// arbok
 				Habilidade A23 = new Habilidade("Furacao",               80,        50); //dragonite
 				Habilidade A24 = new Habilidade("Dragon Tail",           50,        70);// dragonite
-				Habilidade A25 = new Habilidade("LanÃ§a-Chamas",         50,        70);
+				Habilidade A25 = new Habilidade("Lanca-Chamas",         50,        70);
 				Habilidade A26 = new Habilidade("Bola de fogo",          45,        75);
 				Habilidade A27 = new Habilidade("Toxico",                50,        70);
 				Habilidade A28 = new Habilidade("Toxic Spray",           35,        85);

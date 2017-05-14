@@ -29,7 +29,7 @@ public class Pokemon {
 		this.hp -= dano;
 		//System.out.println(this.pegaNome()+" agora tem " +this.pegaHP()+ "HP.");
 		if(this.hp <= 0.0){
-			//System.out.println(this.pegaNome()+" agora esta invalido.");
+			System.out.println("Dano:"+dano);
 			this.hp = 0;
 			status = false;
 		}
