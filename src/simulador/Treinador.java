@@ -23,15 +23,15 @@ public class Treinador {
 		if(this.pokemon[0].hp>=100){
 			this.pokemon[0].hp = 100;
 			System.out.println("O pokemon "+this.pokemon[0].pegaNome()+" foi curado em "+a.pegaNome()+ " em "+a.pegaEfeito()+ "hp e tem agora " +this.pokemon[0].pegaHP() +"HP");
-		}
-		if(this.pokemon[0].hp>0 && this.pokemon[0].hp<= 100){
+		} else {
+			if(this.pokemon[0].hp>0 && this.pokemon[0].hp <=100){
 			this.pokemon[0].hp+= a.pegaEfeito();
 			if(this.pokemon[0].hp >= 100) {
 				this.pokemon[0].hp = 100;
 			}
 			System.out.println("O pokemon "+this.pokemon[0].pegaNome()+" foi curado com "+a.pegaNome()+ " em "+a.pegaEfeito()+"hp e tem agora " +this.pokemon[0].pegaHP() +"HP");
 		}
-
+		}
 	}
 	public void corre(){
 		status = false;
