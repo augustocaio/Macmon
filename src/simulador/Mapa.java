@@ -2,10 +2,10 @@ package simulador;
 
 import java.util.Random;
 
-public class Mapa {
+public class Mapa extends Controller {
 	private boolean[] mapa;
 	private int tamanho, nPokeVivos;
-	public int indice_t1, indice_t2, inicio, i;
+	public int inicio, indice;
 	Treinador t1, t2, twild;
 	// tWild seria o treinador q a gente criaria pra ter apenas 1 pokemon, o pokemon selvagem
 	// t1 provavelmente seria o treinador q a gente "controla" e t2 seria o treinador q batalha com t1
@@ -18,9 +18,7 @@ public class Mapa {
 		this.t2 = t2;
 		mapa = new boolean[t];
 		inicio = 0;
-		indice_t1 = 0;
-		indice_t2 = 0;
-		i = 0;
+		indice = 0;
 	}
 	// mapa unidirecional: em x
 	// dois treinadores q podem batalhar entre si se estiverem no mesmo indice e fora da grama
@@ -59,16 +57,21 @@ public class Mapa {
 		public void action() {
 			Random r = new Random();
 			int v = r.nextInt(10);
-			// 70%, sei lá, de chance de batalha
-			if(ehGrama(i) && v<8) {
+			// 70%, sei lá, de chance de batalha com poke selvagem
+			if(ehGrama(indice) && v<8) {
+				// criar lista de pokemons selvagens? provavelmente sim
+				// acho q um if usando o "v" para lutar com um pokemon selvagem aleatorio
+				
 				// batalha
 			}
 			
 		}
 
 		public String description() {
-			//treinador t1 (oq controlaremos o movimento) andou por grama ou chão
-			return null; 
+			return t1.pegaNome() + "andou pelo indice " + indice + " num" + (ehGrama(indice) ? "a grama" : " chao normal")
+					+ "\n---------------------------------------"
+					+ t2.pegaNome() + "andou pelo indice " + indice + " num" + (ehGrama(indice) ? "a grama" : " chao normal");
+			// mudar isso acho, "andou pelo indice" nao fica mto bom
 		}
 	}
 	
