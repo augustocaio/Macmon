@@ -64,6 +64,9 @@ public class Main {
 		
 		Mapa map = new Mapa(4, t1, t2, ps);
 		map.walk(t1, 's');
+		map.walk(t2, 'd');
+		//map.walk(t2, 'a');
+		
 		map.run();
 		
 

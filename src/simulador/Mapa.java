@@ -32,15 +32,18 @@ public class Mapa extends Controller {
 		char sentido;
 		Mapa mapa;
 		int confirma;
+		boolean jalutou;
 		
 		public Anda(long eventTime, Treinador t, char sent){
 			super(eventTime);
 			sentido = sent;
 			this.t = t;
 			confirma = 0;
+			jalutou = false;
 			
 		}
 		public void action(){
+			int[][] inicial = t.pos;
 			if(sentido == 'w'){
 				if(t.y != 0)
 					t.y--;
@@ -87,10 +90,18 @@ public class Mapa extends Controller {
 					selvagem.run();
 				}
 			}
-			if(t1.pos == t2.pos && t1.status == true && t2.status == true){
+			if(t1.pos == t2.pos && t1.status == true && t2.status == true && mat[t1.x][t1.y] != 1 ){
+				if(t == t1){
+					if(inicial == t2.pos)
+						jalutou = true;
+				}
+				if(t == t2){
+					if(inicial == t1.pos)
+						jalutou = true;
+				}
 				Batalha bat = new Batalha(t1, t2);
 				bat.run();
-				while(t1.status == true && t2.status == true){
+				while(t1.status == true && t2.status == true && jalutou == false){
 					//as escolhas são feitas
 					bat.ComputaEscolhas(9, 9);
 					bat.run();
@@ -98,10 +109,14 @@ public class Mapa extends Controller {
 					bat.run();
 					bat.ComputaEscolhas(12, 12);
 					bat.run();
+					if(t1.status == false || t2.status == false)			
+						break;
 				}
-				t1.status = true;
-				t2.status = true;
+				
 			}
+			t1.status = true;
+			t2.status = true;
+			
 		}
 		
 		public String description(){
