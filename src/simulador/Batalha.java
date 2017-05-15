@@ -33,7 +33,6 @@ public class Batalha extends Controller{
 		private int qual; //qual pokemon foi escolhido pra sofrer troca
 		/*private Pokemon[] p;*/	
 		private Pokemon aux;
-		int i;
 		
 		public Troca(long eventTime, Treinador t, int which/*de 1 a 4*/){
 			super(eventTime);
@@ -44,21 +43,38 @@ public class Batalha extends Controller{
 		}
 		public void action(){
 			aux = t.pokemon[0];
-			t.troca(qual);
+			if(t.wild == false){
+				t.troca(qual);
+			}
+			else{
+				t.status = false;
+			}
+			
 		}		
 		
 		public String description(){
 			if(t1.status == false || t2.status==false){
-				if(t1.status == false)
-					return "---------------------------------------\nA Batalha terminou\n---------------------------------------"
+				if(t1.status == false){
+					if(t2.wild == false) return "---------------------------------------\nA Batalha terminou\n---------------------------------------"
 							+ "\n---------------------------------------\nO Treinador "+t2.pegaNome()+" venceu a batalha.\n---------------------------------------";
-				else return "---------------------------------------\nA Batalha terminou\n---------------------------------------"
-				+ "\n---------------------------------------\nO Treinador "+t1.pegaNome()+" venceu a batalha\n---------------------------------------";
+					else return "---------------------------------------\nA Batalha terminou\n---------------------------------------"
+					+ "\n---------------------------------------\nO Pokemon Selvagem "+t2.pokemon[0].pegaNome()+" venceu a batalha.\n---------------------------------------";
+				}
+					
+				else {
+					return "---------------------------------------\nA Batalha terminou\n---------------------------------------"
+								+ "\n---------------------------------------\nO Treinador "+t1.pegaNome()+" venceu a batalha\n---------------------------------------";
+				}
+			
 			}
-			
-			
-			else 
-				return "O Pokemon "+aux.pegaNome()+", do Treinador " +t.pegaNome()+", foi substituido pelo Pokemon "+t.pokemon[0].pegaNome()+"\n---------------------------------------";
+			else {
+				if(t.wild == false){
+					return "O Pokemon "+aux.pegaNome()+", do Treinador " +t.pegaNome()+", foi substituido pelo Pokemon "+t.pokemon[0].pegaNome()+"\n---------------------------------------";
+				}
+				else
+					return "O Pokemon "+t.pokemon[0].pegaNome()+" foi derrotado\n---------------------------------------";
+				
+			}
 		}
 	}
 	
@@ -126,10 +142,10 @@ public class Batalha extends Controller{
 		
 		public String description(){
 			int index = Arrays.asList(atacante.pokemon[0].hab).indexOf(habilidade);
-			
+
 			return "O Pokemon "+atacante.pokemon[0].pegaNome()+" atacou "+atacado.pokemon[0].pegaNome()+" com "+atacante.pokemon[0].hab[index].pegaNome()+
 						"\n"+atacado.pokemon[0].pegaNome()+" perdeu "+dano+"HP, agora tem "+atacado.pokemon[0].hp+"HP\n---------------------------------------";
-			
+
 		}
 	}
 	
@@ -143,11 +159,15 @@ public class Batalha extends Controller{
 			this.pocao = I;
 		}
 		public void action(){
+			if(t.wild == false)
 			t.curar(pocao);
 		}
 		public String description(){
-			return "O Pokemon "+t.pokemon[0].pegaNome()+" foi curado com " + 
+			if(t.wild == false)
+				return "O Pokemon "+t.pokemon[0].pegaNome()+" foi curado com " + 
 					pocao.pegaNome() + " e tem " +t.pokemon[0].hp+" de HP.\n---------------------------------------";
+			else 
+				return "O Pokemon e selvagem e nao pode se curar\n---------------------------------------";
 		}
 	}
 	// 4 - CLASSE DE USAR POKEBOLA (ATENÇÃO: COMPLETAR PARA A ETAPA 2)
@@ -176,12 +196,14 @@ public class Batalha extends Controller{
 			t.corre();
 		}
 		public String description(){
-			return "O treinador "+t.pegaNome()+" fugiu da batalha.\n---------------------------------------";
+			if(t.wild ==false)
+				return "O treinador "+t.pegaNome()+" fugiu da batalha.\n---------------------------------------";
+			else return "O Pokemon selvagem fugiu da batalha.\n---------------------------------------";
 		}
 	}
+
 	
-	
-	// 6 - METODO PRA DETERMINAR OS EVENTOS as escolhas vÃ£o de 1 a 7
+	//  - METODO PRA DETERMINAR OS EVENTOS as escolhas vÃ£o de 1 a 7
 		public void ComputaEscolhas(int mov1, int mov2){
 			if( t1.status == true && t2.status == true){
 				if(mov1 == 1){
@@ -504,21 +526,12 @@ public class Batalha extends Controller{
 		}
 		
 		
-	/*private void setEscolhas(int[] mov1, int[] mov2){
-		int i = 0, j =0;
-		while(i< mov1.length || i< mov2.length){
-			ComputaEscolhas(mov1[i],mov2[j]);
-			if(i<mov1.length)
-				i++;
-			if(j<mov2.length)
-				j++;
-		}
-	}
-	*/
-	//VER COMO O RUN() FUNCIONA, SE ELE CONTINUA O VETOR ATÉ ACABAR OS 100 EVENTOS, OU TEMOS QUE PARA-LO
+		
+
+
 	
-	public static void main(String[] args){
-		// mudar valores de velocidade dos ataques para algo "decente"
+	/*public static void main(String[] args){
+		
 				Habilidade A1 = new Habilidade("Trovom",                 35,        85); // pichu, raichu
 				Habilidade A2 = new Habilidade("Rabada",       	         40,        80); // pichu, raichu, gyarados,  mew, mewtwo, arbok, squirtle, charmander
 				Habilidade A3 = new Habilidade("Patada",                 25,        95); // pichu, raichu
@@ -572,8 +585,8 @@ public class Batalha extends Controller{
 				Pokemon[] p1 = {P1, P2, P3, P4, P5, P6};
 				Pokemon[] p2 = {P7, P8, P9, P10, P11, P12};
 				
-				Treinador t1 = new Treinador("Trash", false, p1 , i1);
-				Treinador t2 = new Treinador("Dusty", false, p2, i2);
+				Treinador t1 = new Treinador("Trash", false, p1 , i1, 0, 0 );
+				Treinador t2 = new Treinador("Dusty", false, p2, i2, 0, 0);
 		Batalha bt = new Batalha(t1, t2);
 		// 1 - fuga, 2~6- troca pelo 1~5, 7 - super potion, 8 - potion 
 		// 9 -> ataque 0, 10 -> ataque 1, 11 -> ataque 2, 12 -> ataque 3
@@ -608,6 +621,6 @@ public class Batalha extends Controller{
 		
 		bt.run();
 		
-	}
+	}*/
 
 }

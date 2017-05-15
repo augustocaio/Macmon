@@ -46,7 +46,7 @@ public class Pokemon {
 	public String pegaFraqueza(){
 		return this.fraqueza;
 	}
-	public Habilidade pegaAtaque(int i){
-		return this.hab[i];
+	public Habilidade[] pegaAtaques(){
+		return this.hab;
 	}
 }

@@ -7,8 +7,11 @@ public class Treinador {
 	public String movimento;
 	public boolean wild;
 	Item itens[];
+	int x;
+	int y;
+	int pos[][];
 	
-	public Treinador( String nome, boolean selvagem, Pokemon[] pok, Item[] itens){
+	public Treinador( String nome, boolean selvagem, Pokemon[] pok,  int x, int y){
 		this.nome = nome;
 		this.pokemon[0] = pok[0];
 		this.pokemon[1] = pok[1];
@@ -18,6 +21,12 @@ public class Treinador {
 		this.pokemon[5] = pok[5];
 		this.status = true;
 		wild = selvagem;
+		this.x = x;
+		this.y = y;
+		setPos(x, y);
+	}
+	
+	void setItens(Item[] itens){
 		this.itens = itens;
 	}
 	public Treinador( Pokemon p1) {
@@ -28,6 +37,12 @@ public class Treinador {
 	String pegaNome(){
 		return this.nome;
 	}
+	
+	void setPos(int i, int j){
+		x = i;
+		y = j;
+	}
+	
 	public void curar(Potion a){
 		if(this.pokemon[0].hp>=100){
 			this.pokemon[0].hp = 100;
