@@ -43,7 +43,9 @@ public class Mapa extends Controller {
 			
 		}
 		public void action(){
-			int[][] inicial = t.pos;
+			int xinicial = t.getx();
+			int yinicial = t.gety();
+
 			if(sentido == 'w'){
 				if(t.y != 0)
 					t.y--;
@@ -90,13 +92,13 @@ public class Mapa extends Controller {
 					selvagem.run();
 				}
 			}
-			if(t1.pos == t2.pos && t1.status == true && t2.status == true && mat[t1.x][t1.y] != 1 ){
+			if(t1.x == t2.x && t1.y == t2.y && t1.status == true && t2.status == true && mat[t1.x][t1.y] != 1 ){
 				if(t == t1){
-					if(inicial == t2.pos)
+					if(xinicial == t2.x && yinicial == t2.y)
 						jalutou = true;
 				}
 				if(t == t2){
-					if(inicial == t1.pos)
+					if(xinicial == t1.x && yinicial == t1.y)
 						jalutou = true;
 				}
 				Batalha bat = new Batalha(t1, t2);

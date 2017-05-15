@@ -9,7 +9,6 @@ public class Treinador {
 	Item itens[];
 	int x;
 	int y;
-	int pos[][];
 	
 	public Treinador( String nome, boolean selvagem, Pokemon[] pok,  int x, int y){
 		this.nome = nome;
@@ -41,6 +40,12 @@ public class Treinador {
 	void setPos(int i, int j){
 		x = i;
 		y = j;
+	}
+	int getx(){
+		return x;
+	}
+	int gety(){
+		return y;
 	}
 	
 	public void curar(Potion a){
