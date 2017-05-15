@@ -64,15 +64,15 @@ public class Treinador {
 	}
 	public void corre(){
 		status = false;
-		System.out.println("O treinador "+pegaNome()+" fugiu, perdendo a batalha.");
+		System.out.println("O treinador "+pegaNome()+" fugiu, perdendo a batalha\n---------------------------------------");
 	}
 	public void troca(int i){
 		Pokemon aux = this.pokemon[0];
 		int k = i ;
-		System.out.println("Antes");
+		/*System.out.println("Antes");
 		for(int m = 0; m<=5; m++){
 			System.out.println("O Pokemon "+pokemon[m].pegaNome()+" de indice "+m+ " e " +pokemon[m].hp+ "HP status " +pokemon[m].status);
-		}
+		}*/
 		while(k<6){
 			if(pokemon[k].status ==  true && pokemon[k]!=null){
 				pokemon[0] = pokemon[k];
@@ -81,10 +81,10 @@ public class Treinador {
 			}
 			k++;
 		}
-		System.out.println("Depois");
+		/*System.out.println("Depois");
 		for(int m = 0; m<=5; m++){
 			System.out.println("O Pokemon "+pokemon[m].pegaNome()+" de indice "+m+ " e " +pokemon[m].hp+ "HP status " +pokemon[m].status);
-		}
+		}*/
 		//if(k!=0 && k<=5)
 			//System.out.println(aux.pegaNome()+" foi substituido por "+pokemon[0].pegaNome());
 		if(k>=5 && pokemon[0].status == false){

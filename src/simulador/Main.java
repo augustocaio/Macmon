@@ -55,7 +55,10 @@ public class Main {
 		Item[] i2 = {Pocao, SuperPocao};
 		Pokemon[] p1 = {P1, P2, P3, P4, P5, P6};
 		Pokemon[] p2 = {P7, P8, P9, P10, P11, P12};
+
 		Pokemon[] ps = {P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12};
+		
+		
 		
 		Treinador t1 = new Treinador("Trash", false, p1 , 0, 0 );
 		Treinador t2 = new Treinador("Dusty", false, p2, 0, 1);
@@ -64,8 +67,15 @@ public class Main {
 		
 		Mapa map = new Mapa(4, t1, t2, ps);
 		map.walk(t1, 's');
+		map.walk(t1, 'd');
 		map.walk(t2, 'd');
-		//map.walk(t2, 'a');
+		map.walk(t1, 'a');
+		map.walk(t2, 'd');
+		map.walk(t2, 'd');
+		map.walk(t2, 'd');
+		map.walk(t2, 'w');
+		map.walk(t1, 'd');
+
 		
 		map.run();
 		
