@@ -37,7 +37,6 @@ public class Mapa extends Controller {
 			super(eventTime);
 			sentido = sent;
 			this.t = t;
-			this.mapa = mapa;
 			confirma = 0;
 			
 		}
@@ -49,14 +48,14 @@ public class Mapa extends Controller {
 				confirma = 1;
 			}
 			if(sentido == 's'){
-				if(t.y < mapa.getTamanhoy()-1){
+				if(t.y < getTamanhoy()-1){
 					t.y++;
 					t.setPos(t.x, t.y);
 					confirma = 2;
 				}		
 			}
 			if(sentido == 'd'){
-				if(t.x < mapa.getTamanhox()-1){
+				if(t.x < getTamanhox()-1){
 					t.x++;
 					t.setPos(t.x, t.y);
 					confirma = 3;
@@ -69,7 +68,7 @@ public class Mapa extends Controller {
 					confirma = 4;
 			}
 			imprimeMapa();
-			if(mapa.getChance(t.x, t.y) && confirma != 0){
+			if(getChance(t.x, t.y) && confirma != 0){
 				int r = 0 + (int)(Math.random() * ((11) + 1));
 				
 				//POE UM POKEMON ALEATORIO ENTRE TODOS QUE EXISTEM 

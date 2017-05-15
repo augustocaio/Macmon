@@ -63,6 +63,7 @@ public class Main {
 		t1.setItens(i2);
 		
 		Mapa map = new Mapa(4, t1, t2, ps);
+		map.walk(t1, 's');
 		map.run();
 		
 

@@ -171,18 +171,33 @@ public class Batalha extends Controller{
 		}
 	}
 	// 4 - CLASSE DE USAR POKEBOLA (ATENÇÃO: COMPLETAR PARA A ETAPA 2)
-	/*
+	
 	private class Captura extends Event{
-		public Captura (long eventTime, Treinador t, Pokemon Wild){
+		Pokebola pokebola;
+		boolean captura;
+		public Captura (long eventTime, Pokebola pokebola){
 			super(eventTime);
+			this.pokebola = pokebola;
+			captura = false;
 		}
 		public void action(){
+			if(t2.wild == true){
+				int r = 0 + (int)(Math.random() * ((200) + 1));
+				pokebola.qtd--;
+			}
 			
 		}
 		public String description(){
-			
+			if(captura == true){
+				return "O Pokemon "+t2.pokemon[0].pegaNome()+" foi capturado com sucesso\n---------------------------------------";
+			}
+			else
+				if(t2.wild == true)
+					return "O Pokemon "+t2.pokemon[0].pegaNome()+" nao foi capturado\n---------------------------------------";
+				else
+					return "O Pokemon de outro treinador nao pode ser capturado\n---------------------------------------";
 		}
-	}*/
+	}
 	
 	// 5 - CLASSE PARA A FUGA
 	public class Fuga extends Event{
